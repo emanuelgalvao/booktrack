@@ -119,4 +119,54 @@ class ReadDetailsViewModelTest {
         }
     }
 
+    @Test
+    fun `handleChangeReadingStatus method should update event with ShowToast with success message when change has error`() = runTest {
+        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+                every { isReading } returns true
+            }
+        )
+        coEvery { bookReadingsRepository.setIsReading("id", false) } returns false
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData().join()
+        advanceUntilIdle()
+        readDetailsViewModel.handleChangeReadingStatus().join()
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowToast
+            assertEquals(R.string.details_read_change_is_reading_error, showToastEvent.messageId)
+        }
+    }
+
+    @Test
+    fun `handleChangeReadingStatus method should update event with ShowToast with success message when change is successful`() = runTest {
+        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+                every { isReading } returns false
+            }
+        )
+        coEvery { bookReadingsRepository.setIsReading("id", true) } returns true
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData().join()
+        advanceUntilIdle()
+        readDetailsViewModel.handleChangeReadingStatus().join()
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowToast
+            assertEquals(R.string.details_read_change_is_reading_success, showToastEvent.messageId)
+        }
+    }
+
 }

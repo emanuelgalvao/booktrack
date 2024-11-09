@@ -8,4 +8,5 @@ interface BookReadingsRepository {
 
     suspend fun updateCurrentPage(bookId: String, currentPage: Int): Boolean
 
+    suspend fun setIsReading(bookId: String, isReading: Boolean): Boolean
 }
