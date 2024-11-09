@@ -72,7 +72,17 @@ class ReadDetailsViewModel(
     }
 
     fun deleteReading() = viewModelScope.launch(Dispatchers.IO) {
+        val deleteSuccess = bookReadingsRepository.deleteReading(bookDetailsData.id)
 
+        if (deleteSuccess) {
+            _event.emit(ReadDetailsEvent.ShowDeleted)
+        } else {
+            _event.emit(
+                ReadDetailsEvent.ShowToast(
+                    messageId = R.string.details_read_delete_error
+                )
+            )
+        }
     }
 
     sealed class ReadDetailsUiState {
