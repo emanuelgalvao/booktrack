@@ -184,7 +184,7 @@ class ReadDetailsViewModelTest {
 
         readDetailsViewModel.loadReadData().join()
         advanceUntilIdle()
-        readDetailsViewModel.handleChangeReadingStatus().join()
+        readDetailsViewModel.deleteReading().join()
         advanceUntilIdle()
 
         readDetailsViewModel.event.test {
@@ -208,7 +208,7 @@ class ReadDetailsViewModelTest {
 
         readDetailsViewModel.loadReadData().join()
         advanceUntilIdle()
-        readDetailsViewModel.handleChangeReadingStatus().join()
+        readDetailsViewModel.deleteReading().join()
         advanceUntilIdle()
 
         readDetailsViewModel.event.test {
