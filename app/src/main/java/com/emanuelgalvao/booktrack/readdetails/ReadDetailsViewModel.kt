@@ -40,6 +40,10 @@ class ReadDetailsViewModel(
         )
     }
 
+    fun updateCurrentPage(currentPage: Int) = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     sealed class ReadDetailsUiState {
         data object Loading: ReadDetailsUiState()
         data class ShowError(

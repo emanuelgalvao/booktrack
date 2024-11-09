@@ -2,4 +2,6 @@
     <string name="app_name">booktrack</string>
 
     <string name="details_read_default_error">Ocorreu um erro ao tentar carregar os dados da leitura.</string>
+    <string name="details_read_update_current_page_error">Ocorreu um erro ao tentar atualizar a página atual.</string>
+    <string name="details_read_update_current_page_success">Página atual atualizada com sucesso.</string>
 </resources>

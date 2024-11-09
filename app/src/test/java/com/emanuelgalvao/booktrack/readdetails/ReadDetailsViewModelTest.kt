@@ -71,4 +71,52 @@ class ReadDetailsViewModelTest {
         }
     }
 
+    @Test
+    fun `updateCurrentPage method should update event with ShowToast with error message when update has error`() = runTest {
+        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+            }
+        )
+        coEvery { bookReadingsRepository.updateCurrentPage("id", 50) } returns false
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData()
+        advanceUntilIdle()
+        readDetailsViewModel.updateCurrentPage(50)
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowToast
+            assertEquals(R.string.details_read_update_current_page_error, showToastEvent.messageId)
+        }
+    }
+
+    @Test
+    fun `updateCurrentPage method should update event with ShowToast with success message when update is successful`() = runTest {
+        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+            }
+        )
+        coEvery { bookReadingsRepository.updateCurrentPage("id", 50) } returns true
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData()
+        advanceUntilIdle()
+        readDetailsViewModel.updateCurrentPage(50)
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowToast
+            assertEquals(R.string.details_read_update_current_page_success, showToastEvent.messageId)
+        }
+    }
+
 }

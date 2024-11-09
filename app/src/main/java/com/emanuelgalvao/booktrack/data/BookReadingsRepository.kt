@@ -6,4 +6,6 @@ interface BookReadingsRepository {
 
     suspend fun getReadData(): Result<BookDetailsData>
 
+    suspend fun updateCurrentPage(bookId: String, currentPage: Int): Boolean
+
 }
