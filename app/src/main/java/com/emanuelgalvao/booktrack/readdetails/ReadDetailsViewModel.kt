@@ -58,7 +58,17 @@ class ReadDetailsViewModel(
     }
 
     fun handleChangeReadingStatus() = viewModelScope.launch(Dispatchers.IO) {
+        val changeSuccess = bookReadingsRepository.setIsReading(
+            bookId = bookDetailsData.id,
+            isReading = !bookDetailsData.isReading
+        )
 
+        val messageId = if (changeSuccess) {
+            R.string.details_read_change_is_reading_success
+        } else {
+            R.string.details_read_change_is_reading_error
+        }
+        _event.emit(ReadDetailsEvent.ShowToast(messageId = messageId))
     }
 
     sealed class ReadDetailsUiState {
