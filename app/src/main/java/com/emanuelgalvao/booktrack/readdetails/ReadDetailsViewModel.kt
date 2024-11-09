@@ -2,6 +2,7 @@ package com.emanuelgalvao.booktrack.readdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +21,23 @@ class ReadDetailsViewModel(
     val event: SharedFlow<ReadDetailsEvent?> = _event
 
     fun loadReadData() = viewModelScope.launch(Dispatchers.IO)  {
-
+        _state.emit(ReadDetailsUiState.Loading)
+        bookReadingsRepository.getReadData().fold(
+            onSuccess = {
+                _state.emit(
+                    ReadDetailsUiState.DisplayDetails(
+                        bookDetailsData = it
+                    )
+                )
+            },
+            onFailure = {
+                _state.emit(
+                    ReadDetailsUiState.ShowError(
+                        messageId = R.string.details_read_default_error
+                    )
+                )
+            }
+        )
     }
 
     sealed class ReadDetailsUiState {
