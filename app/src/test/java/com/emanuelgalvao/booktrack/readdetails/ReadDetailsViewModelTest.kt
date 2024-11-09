@@ -169,4 +169,52 @@ class ReadDetailsViewModelTest {
         }
     }
 
+    @Test
+    fun `deleteReading method should update event with ShowToast with error message when delete has error`() = runTest {
+        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+            }
+        )
+        coEvery { bookReadingsRepository.deleteReading("id") } returns false
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData().join()
+        advanceUntilIdle()
+        readDetailsViewModel.handleChangeReadingStatus().join()
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowToast
+            assertEquals(R.string.details_read_delete_error, showToastEvent.messageId)
+        }
+    }
+
+    @Test
+    fun `deleteReading method should update event with ShowDeleted when delete is successful`() = runTest {
+        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+            }
+        )
+        coEvery { bookReadingsRepository.deleteReading("id") } returns true
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData().join()
+        advanceUntilIdle()
+        readDetailsViewModel.handleChangeReadingStatus().join()
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowDeleted
+            assertEquals(true, showToastEvent != null)
+        }
+    }
+
 }

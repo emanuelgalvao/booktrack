@@ -71,6 +71,10 @@ class ReadDetailsViewModel(
         _event.emit(ReadDetailsEvent.ShowToast(messageId = messageId))
     }
 
+    fun deleteReading() = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     sealed class ReadDetailsUiState {
         data object Loading: ReadDetailsUiState()
         data class ShowError(

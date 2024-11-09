@@ -6,4 +6,5 @@
     <string name="details_read_update_current_page_success">Página atual atualizada com sucesso.</string>
     <string name="details_read_change_is_reading_error">Ocorreu um erro ao tentar alterar o estado da leitura.</string>
     <string name="details_read_change_is_reading_success">Estado da leitura alterado com sucesso.</string>
+    <string name="details_read_delete_error">Ocorreu um erro ao tentar excluir a leitura.</string>
 </resources>
