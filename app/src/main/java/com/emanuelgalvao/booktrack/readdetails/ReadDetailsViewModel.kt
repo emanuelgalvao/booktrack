@@ -1,17 +1,27 @@
 package com.emanuelgalvao.booktrack.readdetails
 
 import androidx.lifecycle.ViewModel
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.viewModelScope
+import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
-class ReadDetailsViewModel: ViewModel() {
+class ReadDetailsViewModel(
+    private val bookReadingsRepository: BookReadingsRepository
+): ViewModel() {
 
-    private val _state: MutableStateFlow<ReadDetailsUiState> = MutableStateFlow(ReadDetailsUiState.Loading)
-    val state: StateFlow<ReadDetailsUiState> = _state
+    private val _state: MutableSharedFlow<ReadDetailsUiState> = MutableSharedFlow(replay = 1)
+    val state: SharedFlow<ReadDetailsUiState> = _state.asSharedFlow()
 
-    private val _event: MutableStateFlow<ReadDetailsEvent?> = MutableStateFlow(null)
-    val event: StateFlow<ReadDetailsEvent?> = _event
+    private val _event: MutableSharedFlow<ReadDetailsEvent?> = MutableSharedFlow()
+    val event: SharedFlow<ReadDetailsEvent?> = _event
+
+    fun loadReadData() = viewModelScope.launch(Dispatchers.IO)  {
+
+    }
 
     sealed class ReadDetailsUiState {
         data object Loading: ReadDetailsUiState()

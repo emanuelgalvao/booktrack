@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">booktrack</string>
+
+    <string name="details_read_default_error">Ocorreu um erro ao tentar carregar os dados da leitura.</string>
 </resources>
