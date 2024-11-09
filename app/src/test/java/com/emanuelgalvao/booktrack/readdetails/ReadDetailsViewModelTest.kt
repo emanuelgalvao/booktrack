@@ -25,7 +25,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData()
+        readDetailsViewModel.loadReadData().join()
         advanceUntilIdle()
 
         readDetailsViewModel.state.test {
@@ -54,7 +54,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData()
+        readDetailsViewModel.loadReadData().join()
         advanceUntilIdle()
 
         readDetailsViewModel.state.test {
@@ -84,9 +84,9 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData()
+        readDetailsViewModel.loadReadData().join()
         advanceUntilIdle()
-        readDetailsViewModel.updateCurrentPage(50)
+        readDetailsViewModel.updateCurrentPage(50).join()
         advanceUntilIdle()
 
         readDetailsViewModel.event.test {
@@ -108,9 +108,9 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData()
+        readDetailsViewModel.loadReadData().join()
         advanceUntilIdle()
-        readDetailsViewModel.updateCurrentPage(50)
+        readDetailsViewModel.updateCurrentPage(50).join()
         advanceUntilIdle()
 
         readDetailsViewModel.event.test {

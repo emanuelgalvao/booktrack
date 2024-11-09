@@ -17,13 +17,16 @@ class ReadDetailsViewModel(
     private val _state: MutableSharedFlow<ReadDetailsUiState> = MutableSharedFlow(replay = 1)
     val state: SharedFlow<ReadDetailsUiState> = _state.asSharedFlow()
 
-    private val _event: MutableSharedFlow<ReadDetailsEvent?> = MutableSharedFlow()
-    val event: SharedFlow<ReadDetailsEvent?> = _event
+    private val _event: MutableSharedFlow<ReadDetailsEvent?> = MutableSharedFlow(replay = 1)
+    val event: SharedFlow<ReadDetailsEvent?> = _event.asSharedFlow()
+
+    private lateinit var bookDetailsData: BookDetailsData
 
     fun loadReadData() = viewModelScope.launch(Dispatchers.IO)  {
         _state.emit(ReadDetailsUiState.Loading)
         bookReadingsRepository.getReadData().fold(
             onSuccess = {
+                bookDetailsData = it
                 _state.emit(
                     ReadDetailsUiState.DisplayDetails(
                         bookDetailsData = it
@@ -41,7 +44,17 @@ class ReadDetailsViewModel(
     }
 
     fun updateCurrentPage(currentPage: Int) = viewModelScope.launch(Dispatchers.IO) {
+        val updateSuccess = bookReadingsRepository.updateCurrentPage(
+            bookId = bookDetailsData.id,
+            currentPage = currentPage
+        )
 
+        val messageId = if (updateSuccess) {
+            R.string.details_read_update_current_page_success
+        } else {
+            R.string.details_read_update_current_page_error
+        }
+        _event.emit(ReadDetailsEvent.ShowToast(messageId = messageId))
     }
 
     sealed class ReadDetailsUiState {
