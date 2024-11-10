@@ -1,8 +1,10 @@
 package com.emanuelgalvao.booktrack.home
 
+import android.app.Activity
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
 import com.emanuelgalvao.booktrack.readdetails.BookDetailsData
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +41,13 @@ class HomeViewModel(
     }
 
     fun handleDetailsResult(result: ActivityResult) = viewModelScope.launch(Dispatchers.IO) {
-
+        if (result.resultCode == Activity.RESULT_OK) {
+            _event.emit(
+                HomeEvent.ShowToast(
+                    messageId = R.string.home_deleted_read_success
+                )
+            )
+        }
     }
 
     sealed class HomeUiState {
