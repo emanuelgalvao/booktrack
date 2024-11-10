@@ -2,6 +2,7 @@ package com.emanuelgalvao.booktrack.addbook
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.SearchBooksRepository
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,28 @@ class AddBookViewModel(
     val event: SharedFlow<AddBookEvent?> = _event.asSharedFlow()
 
     fun searchBooksByTitle(title: String) = viewModelScope.launch(Dispatchers.IO) {
+        if (title.isEmpty()) {
+            _event.emit(
+                AddBookEvent.ShowToast(messageId = R.string.add_book_empty_title_error)
+            )
+            return@launch
+        }
 
+        searchBooksRepository.fetchBooksByTitle(title).fold(
+            onSuccess = {
+                _state.emit(
+                    AddBookUiState.DisplayBooks(
+                        books = it,
+                        selectedBookId = null
+                    )
+                )
+            },
+            onFailure = {
+                _event.emit(
+                    AddBookEvent.ShowToast(messageId = R.string.add_book_search_default_error)
+                )
+            }
+        )
     }
 
     sealed class AddBookUiState {
