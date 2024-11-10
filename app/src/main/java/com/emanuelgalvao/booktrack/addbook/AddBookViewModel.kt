@@ -27,7 +27,12 @@ class AddBookViewModel(
     private var selectedBookId: String? = null
 
     fun initScreen() = viewModelScope.launch(Dispatchers.IO) {
-
+        _state.emit(
+            AddBookUiState.DisplayBooks(
+                books = listOf(),
+                selectedBookId = null
+            )
+        )
     }
 
     fun searchBooksByTitle(title: String) = viewModelScope.launch(Dispatchers.IO) {
