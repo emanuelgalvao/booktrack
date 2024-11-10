@@ -9,4 +9,6 @@
     <string name="details_read_delete_error">Ocorreu um erro ao tentar excluir a leitura.</string>
     <string name="add_book_empty_title_error">Digite o título para realizar a busca.</string>
     <string name="add_book_search_default_error">Ocorreu um erro ao realizar a busca.</string>
+    <string name="add_book_no_selected_book">Selecione uma leitura para poder adicionar.</string>
+    <string name="add_book_add_process_error">Ocorreu um erro ao tentar adicionar a leitura.</string>
 </resources>

@@ -3,6 +3,7 @@ package com.emanuelgalvao.booktrack.addbook
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.data.BookReadingsRepository
 import com.emanuelgalvao.booktrack.data.SearchBooksRepository
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class AddBookViewModel(
-    private val searchBooksRepository: SearchBooksRepository
+    private val searchBooksRepository: SearchBooksRepository,
+    private val bookReadingsRepository: BookReadingsRepository
 ): ViewModel() {
 
     private val _state: MutableSharedFlow<AddBookUiState> = MutableSharedFlow(replay = 1)
@@ -58,6 +60,10 @@ class AddBookViewModel(
                 selectedBookId = selectedBookId
             )
         )
+    }
+
+    fun addBook() = viewModelScope.launch(Dispatchers.IO) {
+
     }
 
     sealed class AddBookUiState {
