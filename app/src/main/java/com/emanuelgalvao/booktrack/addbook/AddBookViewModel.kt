@@ -63,7 +63,28 @@ class AddBookViewModel(
     }
 
     fun addBook() = viewModelScope.launch(Dispatchers.IO) {
-
+        if (selectedBookId == null) {
+            _event.emit(
+                AddBookEvent.ShowToast(
+                    messageId = R.string.add_book_no_selected_book
+                )
+            )
+            return@launch
+        }
+        books.firstOrNull { it.id == selectedBookId }?.let {
+            val addedSuccess = bookReadingsRepository.addReading(it)
+            if (addedSuccess) {
+                _event.emit(
+                    AddBookEvent.ShowSuccess
+                )
+            } else {
+                _event.emit(
+                    AddBookEvent.ShowToast(
+                        messageId = R.string.add_book_add_process_error
+                    )
+                )
+            }
+        }
     }
 
     sealed class AddBookUiState {
