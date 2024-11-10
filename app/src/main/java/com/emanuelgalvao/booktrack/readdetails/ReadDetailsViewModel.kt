@@ -3,6 +3,7 @@ package com.emanuelgalvao.booktrack.readdetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.data.ReadingBook
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,16 +21,16 @@ class ReadDetailsViewModel(
     private val _event: MutableSharedFlow<ReadDetailsEvent?> = MutableSharedFlow(replay = 1)
     val event: SharedFlow<ReadDetailsEvent?> = _event.asSharedFlow()
 
-    private lateinit var bookDetailsData: BookDetailsData
+    private lateinit var readingBook: ReadingBook
 
-    fun loadReadData() = viewModelScope.launch(Dispatchers.IO)  {
+    fun loadReadData(bookId: String) = viewModelScope.launch(Dispatchers.IO)  {
         _state.emit(ReadDetailsUiState.Loading)
-        bookReadingsRepository.getReadData().fold(
+        bookReadingsRepository.getReadData(bookId).fold(
             onSuccess = {
-                bookDetailsData = it
+                readingBook = it
                 _state.emit(
                     ReadDetailsUiState.DisplayDetails(
-                        bookDetailsData = it
+                        readingBook = it
                     )
                 )
             },
@@ -45,7 +46,7 @@ class ReadDetailsViewModel(
 
     fun updateCurrentPage(currentPage: Int) = viewModelScope.launch(Dispatchers.IO) {
         val updateSuccess = bookReadingsRepository.updateCurrentPage(
-            bookId = bookDetailsData.id,
+            bookId = readingBook.id,
             currentPage = currentPage
         )
 
@@ -59,8 +60,8 @@ class ReadDetailsViewModel(
 
     fun handleChangeReadingStatus() = viewModelScope.launch(Dispatchers.IO) {
         val changeSuccess = bookReadingsRepository.setIsReading(
-            bookId = bookDetailsData.id,
-            isReading = !bookDetailsData.isReading
+            bookId = readingBook.id,
+            isReading = !readingBook.isReading
         )
 
         val messageId = if (changeSuccess) {
@@ -72,7 +73,7 @@ class ReadDetailsViewModel(
     }
 
     fun deleteReading() = viewModelScope.launch(Dispatchers.IO) {
-        val deleteSuccess = bookReadingsRepository.deleteReading(bookDetailsData.id)
+        val deleteSuccess = bookReadingsRepository.deleteReading(readingBook.id)
 
         if (deleteSuccess) {
             _event.emit(ReadDetailsEvent.ShowDeleted)
@@ -91,7 +92,7 @@ class ReadDetailsViewModel(
             val messageId: Int
         ): ReadDetailsUiState()
         data class DisplayDetails(
-            val bookDetailsData: BookDetailsData,
+            val readingBook: ReadingBook,
         ): ReadDetailsUiState()
     }
 

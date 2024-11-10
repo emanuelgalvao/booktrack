@@ -3,6 +3,7 @@ package com.emanuelgalvao.booktrack.readdetails
 import app.cash.turbine.test
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
 import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.data.ReadingBook
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -19,13 +20,13 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `loadReadData method should update state with ShowError when has error on recover reading data process`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.failure(Exception(""))
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.failure(Exception(""))
 
         readDetailsViewModel = ReadDetailsViewModel(
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
 
         readDetailsViewModel.state.test {
@@ -36,7 +37,7 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `loadReadData method should update state with DisplayDetails when recover reading data process is successful`() = runTest {
-        val readData: BookDetailsData = mockk(relaxed = true) {
+        val readData: ReadingBook = mockk(relaxed = true) {
             every { id } returns "id"
             every { imageUrl } returns "imageUrl"
             every { title } returns "Titulo"
@@ -48,32 +49,32 @@ class ReadDetailsViewModelTest {
             every { currentPage } returns 10
         }
 
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(readData)
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(readData)
 
         readDetailsViewModel = ReadDetailsViewModel(
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
 
         readDetailsViewModel.state.test {
             val displayDetailsState = awaitItem() as ReadDetailsViewModel.ReadDetailsUiState.DisplayDetails
-            assertEquals("id", displayDetailsState.bookDetailsData.id)
-            assertEquals("imageUrl", displayDetailsState.bookDetailsData.imageUrl)
-            assertEquals("Titulo", displayDetailsState.bookDetailsData.title)
-            assertEquals("Subtitulo", displayDetailsState.bookDetailsData.subtitle)
-            assertEquals("Autor", displayDetailsState.bookDetailsData.author)
-            assertEquals("100", displayDetailsState.bookDetailsData.totalPages)
-            assertEquals("Descricao", displayDetailsState.bookDetailsData.description)
-            assertEquals(true, displayDetailsState.bookDetailsData.isReading)
-            assertEquals(10, displayDetailsState.bookDetailsData.currentPage)
+            assertEquals("id", displayDetailsState.readingBook.id)
+            assertEquals("imageUrl", displayDetailsState.readingBook.imageUrl)
+            assertEquals("Titulo", displayDetailsState.readingBook.title)
+            assertEquals("Subtitulo", displayDetailsState.readingBook.subtitle)
+            assertEquals("Autor", displayDetailsState.readingBook.author)
+            assertEquals("100", displayDetailsState.readingBook.totalPages)
+            assertEquals("Descricao", displayDetailsState.readingBook.description)
+            assertEquals(true, displayDetailsState.readingBook.isReading)
+            assertEquals(10, displayDetailsState.readingBook.currentPage)
         }
     }
 
     @Test
     fun `updateCurrentPage method should update event with ShowToast with error message when update has error`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
             }
@@ -84,7 +85,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
         readDetailsViewModel.updateCurrentPage(50).join()
         advanceUntilIdle()
@@ -97,7 +98,7 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `updateCurrentPage method should update event with ShowToast with success message when update is successful`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
             }
@@ -108,7 +109,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
         readDetailsViewModel.updateCurrentPage(50).join()
         advanceUntilIdle()
@@ -121,7 +122,7 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `handleChangeReadingStatus method should update event with ShowToast with success message when change has error`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
                 every { isReading } returns true
@@ -133,7 +134,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
         readDetailsViewModel.handleChangeReadingStatus().join()
         advanceUntilIdle()
@@ -146,7 +147,7 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `handleChangeReadingStatus method should update event with ShowToast with success message when change is successful`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
                 every { isReading } returns false
@@ -158,7 +159,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
         readDetailsViewModel.handleChangeReadingStatus().join()
         advanceUntilIdle()
@@ -171,7 +172,7 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `deleteReading method should update event with ShowToast with error message when delete has error`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
             }
@@ -182,7 +183,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
         readDetailsViewModel.deleteReading().join()
         advanceUntilIdle()
@@ -195,7 +196,7 @@ class ReadDetailsViewModelTest {
 
     @Test
     fun `deleteReading method should update event with ShowDeleted when delete is successful`() = runTest {
-        coEvery { bookReadingsRepository.getReadData() } returns Result.success(
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
             }
@@ -206,7 +207,7 @@ class ReadDetailsViewModelTest {
             bookReadingsRepository = bookReadingsRepository
         )
 
-        readDetailsViewModel.loadReadData().join()
+        readDetailsViewModel.loadReadData("id").join()
         advanceUntilIdle()
         readDetailsViewModel.deleteReading().join()
         advanceUntilIdle()

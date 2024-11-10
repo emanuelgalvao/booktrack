@@ -16,28 +16,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.emanuelgalvao.booktrack.data.ReadingBook
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardComponent
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
 
-data class BookDetailsData(
-    val id: String,
-    val imageUrl: String,
-    val title: String,
-    val subtitle: String,
-    val author: String,
-    val totalPages: String,
-    val description: String,
-    val isReading: Boolean,
-    val currentPage: Int?
-)
-
 @Composable
 fun ReadDetailsComponent(
-    bookDetailsData: BookDetailsData,
+    readingBook: ReadingBook,
     modifier: Modifier,
     onCurrentPageSaveClick: (Int) -> Unit,
     onStartStopReadingClick: () -> Unit
-) = with(bookDetailsData) {
+) = with(readingBook) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -84,7 +73,7 @@ fun ReadDetailsComponent(
 @Composable
 fun ReadDetailsComponentPreview() {
     ReadDetailsComponent(
-        bookDetailsData = BookDetailsData(
+        readingBook = ReadingBook(
             id = "1",
             imageUrl = "",
             title = "Nome do Livro",

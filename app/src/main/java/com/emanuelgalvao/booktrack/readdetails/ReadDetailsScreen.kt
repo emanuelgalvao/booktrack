@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.data.ReadingBook
 import com.emanuelgalvao.booktrack.shared.ErrorComponent
 import com.emanuelgalvao.booktrack.shared.LoadingComponent
 
@@ -46,7 +47,7 @@ fun ReadDetailsScreen(
             }
             is ReadDetailsViewModel.ReadDetailsUiState.DisplayDetails -> {
                 ReadDetailsComponent(
-                    bookDetailsData = state.bookDetailsData,
+                    readingBook = state.readingBook,
                     modifier = Modifier.padding(it),
                     onCurrentPageSaveClick = {
 
@@ -84,7 +85,7 @@ fun ReadDetailsScreenShowErrorStatePreview() {
 fun ReadDetailsScreenDisplayDetailsStatePreview() {
     ReadDetailsScreen(
         state = ReadDetailsViewModel.ReadDetailsUiState.DisplayDetails(
-            bookDetailsData = BookDetailsData(
+            readingBook = ReadingBook(
                 id = "id1",
                 imageUrl = "imageUrl",
                 title = "Título do Livro",

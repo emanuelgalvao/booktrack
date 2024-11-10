@@ -2,12 +2,11 @@ package com.emanuelgalvao.booktrack.data
 
 import com.emanuelgalvao.booktrack.home.BookListData
 import com.emanuelgalvao.booktrack.home.CurrentReadData
-import com.emanuelgalvao.booktrack.readdetails.BookDetailsData
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
 
 interface BookReadingsRepository {
 
-    suspend fun getReadData(): Result<BookDetailsData>
+    suspend fun getReadData(bookId: String): Result<ReadingBook>
 
     suspend fun updateCurrentPage(bookId: String, currentPage: Int): Boolean
 
