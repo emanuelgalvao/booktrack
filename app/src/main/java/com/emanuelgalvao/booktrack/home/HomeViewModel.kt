@@ -1,5 +1,6 @@
 package com.emanuelgalvao.booktrack.home
 
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
@@ -35,6 +36,10 @@ class HomeViewModel(
                 nextReadingsListData = nextReadingsListData
             )
         )
+    }
+
+    fun handleDetailsResult(result: ActivityResult) = viewModelScope.launch(Dispatchers.IO) {
+
     }
 
     sealed class HomeUiState {

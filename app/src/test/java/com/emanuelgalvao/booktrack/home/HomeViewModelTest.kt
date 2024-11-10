@@ -1,7 +1,9 @@
 package com.emanuelgalvao.booktrack.home
 
+import android.app.Activity
 import app.cash.turbine.test
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import com.emanuelgalvao.booktrack.R
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -65,6 +67,25 @@ class HomeViewModelTest {
             assertEquals("200", displayReadingsState.currentReadData?.totalPages)
             assertEquals(0.5f, displayReadingsState.currentReadData?.readProgress)
             assertEquals(1, displayReadingsState.nextReadingsListData.size)
+        }
+    }
+
+    @Test
+    fun `handleDetailsResult should update event with ShowToast when result is deleted read`() = runTest {
+        homeViewModel = HomeViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        homeViewModel.handleDetailsResult(
+            result = mockk(relaxed = true) {
+                every { resultCode } returns Activity.RESULT_OK
+            }
+        ).join()
+        advanceUntilIdle()
+
+        homeViewModel.event.test {
+            val showToastEvent = awaitItem() as HomeViewModel.HomeEvent.ShowToast
+            assertEquals(R.string.home_deleted_read_success, showToastEvent.messageId)
         }
     }
 }
