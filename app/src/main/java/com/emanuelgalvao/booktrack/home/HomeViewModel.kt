@@ -23,7 +23,18 @@ class HomeViewModel(
     val event: SharedFlow<HomeEvent?> = _event.asSharedFlow()
 
     fun loadScreenData() = viewModelScope.launch(Dispatchers.IO) {
+        _state.emit(
+            HomeUiState.Loading
+        )
+        val currentReadData = bookReadingsRepository.getCurrentRead()
+        val nextReadingsListData = bookReadingsRepository.getNextReadings()
 
+        _state.emit(
+            HomeUiState.DisplayReadings(
+                currentReadData = currentReadData,
+                nextReadingsListData = nextReadingsListData
+            )
+        )
     }
 
     sealed class HomeUiState {
