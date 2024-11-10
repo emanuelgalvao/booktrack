@@ -65,6 +65,10 @@ class HomeViewModel(
         )
     }
 
+    fun handleAddBookClick() = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     sealed class HomeUiState {
         data object Loading: HomeUiState()
         data class ShowError(
@@ -79,5 +83,6 @@ class HomeViewModel(
     sealed class HomeEvent {
         data class ShowToast(val messageId: Int): HomeEvent()
         data class GoToReadDetails(val bookId: String): HomeEvent()
+        data object GoToAddBook: HomeEvent()
     }
 }
