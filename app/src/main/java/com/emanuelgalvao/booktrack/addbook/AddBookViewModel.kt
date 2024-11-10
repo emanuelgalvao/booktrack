@@ -21,6 +21,9 @@ class AddBookViewModel(
     private val _event: MutableSharedFlow<AddBookEvent?> = MutableSharedFlow(replay = 1)
     val event: SharedFlow<AddBookEvent?> = _event.asSharedFlow()
 
+    private var books: List<BookDetailsCardData> = listOf()
+    private var selectedBookId: String? = null
+
     fun searchBooksByTitle(title: String) = viewModelScope.launch(Dispatchers.IO) {
         if (title.isEmpty()) {
             _event.emit(
@@ -31,6 +34,7 @@ class AddBookViewModel(
 
         searchBooksRepository.fetchBooksByTitle(title).fold(
             onSuccess = {
+                books = it
                 _state.emit(
                     AddBookUiState.DisplayBooks(
                         books = it,
@@ -47,7 +51,13 @@ class AddBookViewModel(
     }
 
     fun onBookSelected(bookId: String) = viewModelScope.launch(Dispatchers.IO) {
-
+        selectedBookId = bookId
+        _state.emit(
+            AddBookUiState.DisplayBooks(
+                books = books,
+                selectedBookId = selectedBookId
+            )
+        )
     }
 
     sealed class AddBookUiState {
