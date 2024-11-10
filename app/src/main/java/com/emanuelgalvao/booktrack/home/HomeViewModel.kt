@@ -66,7 +66,9 @@ class HomeViewModel(
     }
 
     fun handleAddBookClick() = viewModelScope.launch(Dispatchers.IO) {
-
+        _event.emit(
+            HomeEvent.GoToAddBook
+        )
     }
 
     sealed class HomeUiState {
