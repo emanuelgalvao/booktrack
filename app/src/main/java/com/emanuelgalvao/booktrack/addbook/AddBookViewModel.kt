@@ -46,6 +46,10 @@ class AddBookViewModel(
         )
     }
 
+    fun onBookSelected(bookId: String) = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     sealed class AddBookUiState {
         data object Loading: AddBookUiState()
         data class DisplayBooks(

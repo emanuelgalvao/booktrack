@@ -93,4 +93,18 @@ class AddBookViewModelTest {
         }
     }
 
+    @Test
+    fun `onBookSelected should update state with new selectedBookId when new book is selected`() = runTest {
+        addBookViewModel = AddBookViewModel(
+            searchBooksRepository = searchBooksRepository
+        )
+
+        addBookViewModel.onBookSelected("id1").join()
+        advanceUntilIdle()
+
+        addBookViewModel.state.test {
+            assertEquals("id1", (awaitItem() as AddBookViewModel.AddBookUiState.DisplayBooks).selectedBookId)
+        }
+    }
+
 }
