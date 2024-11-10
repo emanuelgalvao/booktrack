@@ -51,7 +51,13 @@ class HomeViewModel(
     }
 
     fun handleAddBookResult(result: ActivityResult) = viewModelScope.launch(Dispatchers.IO) {
-
+        if (result.resultCode == Activity.RESULT_OK) {
+            _event.emit(
+                HomeEvent.ShowToast(
+                    messageId = R.string.home_added_read_success
+                )
+            )
+        }
     }
 
     sealed class HomeUiState {
