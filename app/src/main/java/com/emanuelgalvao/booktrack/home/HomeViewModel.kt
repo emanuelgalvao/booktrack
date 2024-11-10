@@ -50,6 +50,10 @@ class HomeViewModel(
         }
     }
 
+    fun handleAddBookResult(result: ActivityResult) = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     sealed class HomeUiState {
         data object Loading: HomeUiState()
         data class ShowError(

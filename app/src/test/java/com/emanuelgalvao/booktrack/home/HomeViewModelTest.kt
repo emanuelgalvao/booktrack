@@ -88,4 +88,23 @@ class HomeViewModelTest {
             assertEquals(R.string.home_deleted_read_success, showToastEvent.messageId)
         }
     }
+
+    @Test
+    fun `handleAddBookResult should update event with ShowToast when result is added read`() = runTest {
+        homeViewModel = HomeViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        homeViewModel.handleAddBookResult(
+            result = mockk(relaxed = true) {
+                every { resultCode } returns Activity.RESULT_OK
+            }
+        ).join()
+        advanceUntilIdle()
+
+        homeViewModel.event.test {
+            val showToastEvent = awaitItem() as HomeViewModel.HomeEvent.ShowToast
+            assertEquals(R.string.home_added_read_success, showToastEvent.messageId)
+        }
+    }
 }
