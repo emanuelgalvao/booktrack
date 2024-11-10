@@ -26,6 +26,10 @@ class AddBookViewModel(
     private var books: List<BookDetailsCardData> = listOf()
     private var selectedBookId: String? = null
 
+    fun initScreen() = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     fun searchBooksByTitle(title: String) = viewModelScope.launch(Dispatchers.IO) {
         if (title.isEmpty()) {
             _event.emit(

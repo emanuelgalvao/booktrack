@@ -189,4 +189,21 @@ class AddBookViewModelTest {
         }
     }
 
+    @Test
+    fun `initScreen should update state with DisplayBooks correctly`() = runTest {
+        addBookViewModel = AddBookViewModel(
+            searchBooksRepository = searchBooksRepository,
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        addBookViewModel.initScreen().join()
+        advanceUntilIdle()
+
+        addBookViewModel.state.test {
+            val displayBooksState = awaitItem() as AddBookViewModel.AddBookUiState.DisplayBooks
+            assertEquals(0, displayBooksState.books.size)
+            assertEquals(null, displayBooksState.selectedBookId)
+        }
+    }
+
 }
