@@ -107,4 +107,19 @@ class HomeViewModelTest {
             assertEquals(R.string.home_added_read_success, showToastEvent.messageId)
         }
     }
+
+    @Test
+    fun `handleBookClick should update event with GoToDetails with correct book id`() = runTest {
+        homeViewModel = HomeViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        homeViewModel.handleBookClick("id").join()
+        advanceUntilIdle()
+
+        homeViewModel.event.test {
+            val goToReadDetailsEvent = awaitItem() as HomeViewModel.HomeEvent.GoToReadDetails
+            assertEquals("id", goToReadDetailsEvent.bookId)
+        }
+    }
 }
