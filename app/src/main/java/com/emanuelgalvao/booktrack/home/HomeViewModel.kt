@@ -58,7 +58,11 @@ class HomeViewModel(
     }
 
     fun handleBookClick(bookId: String) = viewModelScope.launch(Dispatchers.IO) {
-
+        _event.emit(
+            HomeEvent.GoToReadDetails(
+                bookId = bookId
+            )
+        )
     }
 
     sealed class HomeUiState {
