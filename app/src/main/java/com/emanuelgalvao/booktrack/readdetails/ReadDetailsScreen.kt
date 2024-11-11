@@ -16,23 +16,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.ReadingBook
+import com.emanuelgalvao.booktrack.shared.CustomTopAppBar
 import com.emanuelgalvao.booktrack.shared.ErrorComponent
 import com.emanuelgalvao.booktrack.shared.LoadingComponent
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadDetailsScreen(
     state: ReadDetailsViewModel.ReadDetailsUiState,
+    onBackClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onCurrentPageSaveClick: (Int) -> Unit,
     onStartStopReadingClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Detalhes do Livro")
-                },
+            CustomTopAppBar(
+                title = "Detalhes do Livro",
+                onBackClick = onBackClick,
                 actions = {
                     IconButton(
                         onClick = onDeleteClick
@@ -43,7 +43,6 @@ fun ReadDetailsScreen(
                         )
                     }
                 }
-                
             )
         }
     ) {
@@ -78,6 +77,7 @@ fun ReadDetailsScreen(
 fun ReadDetailsScreenLoadingStatePreview() {
     ReadDetailsScreen(
         state = ReadDetailsViewModel.ReadDetailsUiState.Loading,
+        onBackClick = { },
         onDeleteClick = { },
         onCurrentPageSaveClick = { },
         onStartStopReadingClick = { }
@@ -91,6 +91,7 @@ fun ReadDetailsScreenShowErrorStatePreview() {
         state = ReadDetailsViewModel.ReadDetailsUiState.ShowError(
             messageId = R.string.app_name
         ),
+        onBackClick = { },
         onDeleteClick = { },
         onCurrentPageSaveClick = { },
         onStartStopReadingClick = { }
@@ -114,6 +115,7 @@ fun ReadDetailsScreenDisplayDetailsStatePreview() {
                 currentPage = 0
             )
         ),
+        onBackClick = { },
         onDeleteClick = { },
         onCurrentPageSaveClick = { },
         onStartStopReadingClick = { }

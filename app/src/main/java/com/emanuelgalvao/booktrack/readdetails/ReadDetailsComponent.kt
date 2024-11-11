@@ -32,7 +32,6 @@ fun ReadDetailsComponent(
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
-            .background(Color.White)
     ) {
         BookDetailsCardComponent(
             bookDetails = BookDetailsCardData(

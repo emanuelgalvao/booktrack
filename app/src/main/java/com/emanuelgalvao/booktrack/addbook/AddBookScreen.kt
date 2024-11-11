@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardComponent
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.shared.CustomTopAppBar
 import com.emanuelgalvao.booktrack.shared.ErrorComponent
 import com.emanuelgalvao.booktrack.shared.LoadingComponent
 
@@ -43,19 +45,16 @@ import com.emanuelgalvao.booktrack.shared.LoadingComponent
 @Composable
 fun AddBookScreen(
     state: AddBookViewModel.AddBookUiState,
+    onBackClick: () -> Unit,
     onSearchClick: (String) -> Unit,
     onBookSelect: (String) -> Unit,
     onAddBookClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Adicionar Livro")
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray
-                )
+            CustomTopAppBar(
+                title = "Adicionar Livro",
+                onBackClick = onBackClick
             )
         }
     ) {
@@ -84,6 +83,7 @@ fun AddBookScreen(
 fun AddBookScreenLoadingStatePreview() {
     AddBookScreen(
         state = AddBookViewModel.AddBookUiState.Loading,
+        onBackClick = { },
         onSearchClick = { },
         onBookSelect = { },
         onAddBookClick = { }
@@ -98,6 +98,7 @@ fun AddBookScreenDisplayBooksStatePreview() {
             books = listOf(),
             selectedBookId = null
         ),
+        onBackClick = { },
         onSearchClick = { },
         onBookSelect = { },
         onAddBookClick = { }

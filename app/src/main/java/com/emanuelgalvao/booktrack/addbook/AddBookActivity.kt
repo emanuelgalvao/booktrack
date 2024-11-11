@@ -10,6 +10,7 @@ import com.emanuelgalvao.booktrack.data.BookReadingsLocalDataSource
 import com.emanuelgalvao.booktrack.data.DatabaseBuilder
 import com.emanuelgalvao.booktrack.data.RetrofitInstance
 import com.emanuelgalvao.booktrack.data.SearchBooksRemoteDataSource
+import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
 import kotlinx.coroutines.launch
 
 class AddBookActivity : AppCompatActivity() {
@@ -36,18 +37,23 @@ class AddBookActivity : AppCompatActivity() {
             val state = addBookViewModel.state.collectAsState(
                 initial = AddBookViewModel.AddBookUiState.Loading
             )
-            AddBookScreen(
-                state = state.value,
-                onSearchClick = { title ->
-                    addBookViewModel.searchBooksByTitle(title)
-                },
-                onBookSelect = { bookId ->
-                    addBookViewModel.onBookSelected(bookId)
-                },
-                onAddBookClick = {
-                    addBookViewModel.addBook()
-                }
-            )
+            BooktrackTheme {
+                AddBookScreen(
+                    state = state.value,
+                    onBackClick = {
+                        onBackPressedDispatcher.onBackPressed()
+                    },
+                    onSearchClick = { title ->
+                        addBookViewModel.searchBooksByTitle(title)
+                    },
+                    onBookSelect = { bookId ->
+                        addBookViewModel.onBookSelected(bookId)
+                    },
+                    onAddBookClick = {
+                        addBookViewModel.addBook()
+                    }
+                )
+            }
         }
     }
 

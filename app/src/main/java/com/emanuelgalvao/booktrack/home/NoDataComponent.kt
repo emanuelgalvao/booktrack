@@ -27,7 +27,6 @@ fun NoDataComponent() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         Icon(
             imageVector = Icons.Outlined.SentimentDissatisfied,

@@ -56,7 +56,7 @@ fun BookDetailsCardComponent(
             .border(
                 border = BorderStroke(
                     if (isSelected) 1.dp else (-1).dp,
-                    Color.Red
+                    MaterialTheme.colorScheme.primary
                 ),
                 shape = MaterialTheme.shapes.medium
             )

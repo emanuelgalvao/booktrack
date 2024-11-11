@@ -10,6 +10,7 @@ import com.emanuelgalvao.booktrack.addbook.AddBookScreen
 import com.emanuelgalvao.booktrack.addbook.AddBookViewModel
 import com.emanuelgalvao.booktrack.data.BookReadingsLocalDataSource
 import com.emanuelgalvao.booktrack.data.DatabaseBuilder
+import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
 import kotlinx.coroutines.launch
 
 class ReadDetailsActivity : AppCompatActivity() {
@@ -39,18 +40,23 @@ class ReadDetailsActivity : AppCompatActivity() {
             val state = readDetailsViewModel.state.collectAsState(
                 initial = ReadDetailsViewModel.ReadDetailsUiState.Loading
             )
-            ReadDetailsScreen(
-                state = state.value,
-                onDeleteClick = {
-                    readDetailsViewModel.deleteReading()
-                },
-                onCurrentPageSaveClick = { currentPage ->
-                    readDetailsViewModel.updateCurrentPage(currentPage)
-                },
-                onStartStopReadingClick = {
-                    readDetailsViewModel.handleChangeReadingStatus()
-                }
-            )
+            BooktrackTheme {
+                ReadDetailsScreen(
+                    state = state.value,
+                    onBackClick = {
+                        onBackPressedDispatcher.onBackPressed()
+                    },
+                    onDeleteClick = {
+                        readDetailsViewModel.deleteReading()
+                    },
+                    onCurrentPageSaveClick = { currentPage ->
+                        readDetailsViewModel.updateCurrentPage(currentPage)
+                    },
+                    onStartStopReadingClick = {
+                        readDetailsViewModel.handleChangeReadingStatus()
+                    }
+                )
+            }
         }
     }
 

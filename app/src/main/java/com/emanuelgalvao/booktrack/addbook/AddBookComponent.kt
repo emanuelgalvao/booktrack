@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -67,17 +68,21 @@ fun AddBookComponent(
             IconButton(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50.dp))
-                    .background(Color.Red),
+                    .background(MaterialTheme.colorScheme.primary),
                 onClick = {
                     onSearchClick(searchTextState.value)
                 }
             ) {
-                Icon(imageVector = Icons.Outlined.Search, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Outlined.Search,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
         AnimatedVisibility(visible = books.isEmpty()) {
             ErrorComponent(
-                messageId = R.string.app_name,
+                messageId = R.string.add_book_no_data_message,
                 modifier = Modifier
                     .weight(1f)
             )

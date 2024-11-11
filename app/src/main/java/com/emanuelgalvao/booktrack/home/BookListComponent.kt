@@ -43,7 +43,6 @@ fun BookListComponent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
         Text(
             text = "Próximas Leituras",

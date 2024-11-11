@@ -31,7 +31,6 @@ fun ReadDetailsCurrentPageComponent(
 
     Row(
         modifier = Modifier
-            .background(Color.White)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {

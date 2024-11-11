@@ -13,6 +13,7 @@ import com.emanuelgalvao.booktrack.addbook.AddBookActivity
 import com.emanuelgalvao.booktrack.data.BookReadingsLocalDataSource
 import com.emanuelgalvao.booktrack.data.DatabaseBuilder
 import com.emanuelgalvao.booktrack.readdetails.ReadDetailsActivity
+import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -43,18 +44,20 @@ class HomeActivity : AppCompatActivity() {
             val state = homeViewModel.state.collectAsState(
                 initial = HomeViewModel.HomeUiState.Loading
             )
-            HomeScreen(
-                state = state.value,
-                onAddBookClick = {
-                    homeViewModel.handleAddBookClick()
-                },
-                onTryAgainClick = {
-                    homeViewModel.loadScreenData()
-                },
-                onBookClick = { bookId ->
-                    homeViewModel.handleBookClick(bookId)
-                }
-            )
+            BooktrackTheme {
+                HomeScreen(
+                    state = state.value,
+                    onAddBookClick = {
+                        homeViewModel.handleAddBookClick()
+                    },
+                    onTryAgainClick = {
+                        homeViewModel.loadScreenData()
+                    },
+                    onBookClick = { bookId ->
+                        homeViewModel.handleBookClick(bookId)
+                    }
+                )
+            }
         }
     }
 
