@@ -42,7 +42,10 @@ import com.emanuelgalvao.booktrack.shared.LoadingComponent
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddBookScreen(
-    state: AddBookViewModel.AddBookUiState
+    state: AddBookViewModel.AddBookUiState,
+    onSearchClick: (String) -> Unit,
+    onBookSelect: (String) -> Unit,
+    onAddBookClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -64,7 +67,12 @@ fun AddBookScreen(
                 AddBookComponent(
                     books = state.books,
                     selectedBookId = state.selectedBookId,
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier.padding(it),
+                    onSearchClick = onSearchClick,
+                    onBookSelect = { bookId ->
+                        onBookSelect(bookId)
+                    },
+                    onAddBookClick = onAddBookClick
                 )
             }
         }
@@ -75,7 +83,10 @@ fun AddBookScreen(
 @Composable
 fun AddBookScreenLoadingStatePreview() {
     AddBookScreen(
-        state = AddBookViewModel.AddBookUiState.Loading
+        state = AddBookViewModel.AddBookUiState.Loading,
+        onSearchClick = { },
+        onBookSelect = { },
+        onAddBookClick = { }
     )
 }
 
@@ -86,6 +97,9 @@ fun AddBookScreenDisplayBooksStatePreview() {
         state = AddBookViewModel.AddBookUiState.DisplayBooks(
             books = listOf(),
             selectedBookId = null
-        )
+        ),
+        onSearchClick = { },
+        onBookSelect = { },
+        onAddBookClick = { }
     )
 }

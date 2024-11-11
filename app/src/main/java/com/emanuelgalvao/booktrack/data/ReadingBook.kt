@@ -14,5 +14,5 @@ data class ReadingBook(
     val totalPages: String,
     val description: String,
     val isReading: Boolean,
-    val currentPage: Int?
+    val currentPage: Int
 )

@@ -15,12 +15,15 @@ import com.emanuelgalvao.booktrack.shared.LoadingComponent
 
 @Composable
 fun HomeScreen(
-    state: HomeViewModel.HomeUiState
+    state: HomeViewModel.HomeUiState,
+    onAddBookClick: () -> Unit,
+    onTryAgainClick: () -> Unit,
+    onBookClick: (String) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {  }
+                onClick = onAddBookClick
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
@@ -37,9 +40,7 @@ fun HomeScreen(
                 ErrorComponent(
                     messageId = state.messageId,
                     modifier = Modifier.padding(it),
-                    tryAgainCallback = {
-
-                    }
+                    tryAgainCallback = onTryAgainClick
                 )
             }
             is HomeViewModel.HomeUiState.DisplayReadings -> {
@@ -47,8 +48,8 @@ fun HomeScreen(
                     currentReadData = state.currentReadData,
                     nextReadingsListData = state.nextReadingsListData,
                     modifier = Modifier.padding(it),
-                    onBookClick = {
-
+                    onBookClick = { bookId ->
+                        onBookClick(bookId)
                     }
                 )
             }
@@ -61,7 +62,10 @@ fun HomeScreen(
 @Composable
 fun HomeScreenLoadingStatePreview() {
     HomeScreen(
-        state = HomeViewModel.HomeUiState.Loading
+        state = HomeViewModel.HomeUiState.Loading,
+        onAddBookClick = { },
+        onTryAgainClick = { },
+        onBookClick = { }
     )
 }
 
@@ -71,7 +75,10 @@ fun HomeScreenShowErrorStatePreview() {
     HomeScreen(
         state = HomeViewModel.HomeUiState.ShowError(
             messageId = R.string.app_name
-        )
+        ),
+        onAddBookClick = { },
+        onTryAgainClick = { },
+        onBookClick = { }
     )
 }
 
@@ -82,6 +89,9 @@ fun HomeScreenDisplayReadingsStatePreview() {
         state = HomeViewModel.HomeUiState.DisplayReadings(
             currentReadData = null,
             nextReadingsListData = listOf()
-        )
+        ),
+        onAddBookClick = { },
+        onTryAgainClick = { },
+        onBookClick = { }
     )
 }

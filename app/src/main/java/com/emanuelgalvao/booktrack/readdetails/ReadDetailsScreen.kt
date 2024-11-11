@@ -1,7 +1,11 @@
 package com.emanuelgalvao.booktrack.readdetails
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -18,17 +22,28 @@ import com.emanuelgalvao.booktrack.shared.LoadingComponent
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadDetailsScreen(
-    state: ReadDetailsViewModel.ReadDetailsUiState
+    state: ReadDetailsViewModel.ReadDetailsUiState,
+    onDeleteClick: () -> Unit,
+    onCurrentPageSaveClick: (Int) -> Unit,
+    onStartStopReadingClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Adicionar Livro")
+                    Text(text = "Detalhes do Livro")
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray
-                )
+                actions = {
+                    IconButton(
+                        onClick = onDeleteClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Delete,
+                            contentDescription = null
+                        )
+                    }
+                }
+                
             )
         }
     ) {
@@ -49,12 +64,8 @@ fun ReadDetailsScreen(
                 ReadDetailsComponent(
                     readingBook = state.readingBook,
                     modifier = Modifier.padding(it),
-                    onCurrentPageSaveClick = {
-
-                    },
-                    onStartStopReadingClick = {
-
-                    }
+                    onCurrentPageSaveClick = onCurrentPageSaveClick,
+                    onStartStopReadingClick = onStartStopReadingClick
                 )
             }
 
@@ -66,7 +77,10 @@ fun ReadDetailsScreen(
 @Composable
 fun ReadDetailsScreenLoadingStatePreview() {
     ReadDetailsScreen(
-        state = ReadDetailsViewModel.ReadDetailsUiState.Loading
+        state = ReadDetailsViewModel.ReadDetailsUiState.Loading,
+        onDeleteClick = { },
+        onCurrentPageSaveClick = { },
+        onStartStopReadingClick = { }
     )
 }
 
@@ -76,7 +90,10 @@ fun ReadDetailsScreenShowErrorStatePreview() {
     ReadDetailsScreen(
         state = ReadDetailsViewModel.ReadDetailsUiState.ShowError(
             messageId = R.string.app_name
-        )
+        ),
+        onDeleteClick = { },
+        onCurrentPageSaveClick = { },
+        onStartStopReadingClick = { }
     )
 }
 
@@ -94,8 +111,11 @@ fun ReadDetailsScreenDisplayDetailsStatePreview() {
                 totalPages = "200",
                 description = "Descrição do Livro",
                 isReading = false,
-                currentPage = null
+                currentPage = 0
             )
-        )
+        ),
+        onDeleteClick = { },
+        onCurrentPageSaveClick = { },
+        onStartStopReadingClick = { }
     )
 }

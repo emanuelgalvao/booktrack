@@ -21,6 +21,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,8 +38,14 @@ import com.emanuelgalvao.booktrack.shared.ErrorComponent
 fun AddBookComponent(
     books: List<BookDetailsCardData>,
     selectedBookId: String?,
-    modifier: Modifier
+    modifier: Modifier,
+    onSearchClick: (String) -> Unit,
+    onBookSelect: (String) -> Unit,
+    onAddBookClick: () -> Unit
 ) {
+
+    val searchTextState = rememberSaveable { mutableStateOf("") }
+
     Column(
         modifier = modifier
             .padding(8.dp)
@@ -49,9 +57,10 @@ fun AddBookComponent(
                 .fillMaxWidth()
         ) {
             OutlinedTextField(
-                value = "Pesquisar livro por título...",
-                onValueChange = { },
+                value = searchTextState.value,
+                onValueChange = { searchTextState.value = it },
                 maxLines = 1,
+                placeholder = { Text("Pesquisar livro por título...") },
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -59,7 +68,9 @@ fun AddBookComponent(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50.dp))
                     .background(Color.Red),
-                onClick = { /*TODO*/ }
+                onClick = {
+                    onSearchClick(searchTextState.value)
+                }
             ) {
                 Icon(imageVector = Icons.Outlined.Search, contentDescription = null)
             }
@@ -81,13 +92,13 @@ fun AddBookComponent(
                     isSelected = selectedBookId == book.id,
                     modifier = Modifier
                         .padding(top = 8.dp),
-                    onClick = {  }
+                    onClick = { onBookSelect(book.id) }
                 )
             }
         }
         AnimatedVisibility(visible = selectedBookId != null) {
             Button(
-                onClick = { },
+                onClick = onAddBookClick,
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .fillMaxWidth()
@@ -105,7 +116,10 @@ fun AddBookComponentEmptyListPreview() {
     AddBookComponent(
         books = listOf(),
         selectedBookId = null,
-        modifier = Modifier
+        modifier = Modifier,
+        onSearchClick = { },
+        onBookSelect = { },
+        onAddBookClick = { }
     )
 }
 
@@ -134,7 +148,10 @@ fun AddBookComponentWithBookDataWithoutSelectedBookPreview() {
             )
         ),
         selectedBookId = null,
-        modifier = Modifier
+        modifier = Modifier,
+        onSearchClick = { },
+        onBookSelect = { },
+        onAddBookClick = { }
     )
 }
 
@@ -163,6 +180,9 @@ fun AAddBookComponentWithBookDataWithSelectedBookPreview() {
             )
         ),
         selectedBookId = "id2",
-        modifier = Modifier
+        modifier = Modifier,
+        onSearchClick = { },
+        onBookSelect = { },
+        onAddBookClick = { }
     )
 }

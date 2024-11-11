@@ -13,7 +13,8 @@ object DatabaseBuilder {
                     context.applicationContext,
                     ReadingsDatabase::class.java,
                     "readings_database"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                .build()
             }
         }
         return instance!!

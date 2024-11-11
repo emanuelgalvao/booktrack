@@ -10,6 +10,8 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +26,9 @@ fun ReadDetailsCurrentPageComponent(
     currentPage: Int,
     onSaveClick: (Int) -> Unit
 ) {
+
+    val currentPageState = rememberSaveable { mutableStateOf(currentPage.toString()) }
+
     Row(
         modifier = Modifier
             .background(Color.White)
@@ -31,8 +36,8 @@ fun ReadDetailsCurrentPageComponent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         OutlinedTextField(
-            value = currentPage.toString(),
-            onValueChange = { },
+            value = currentPageState.value,
+            onValueChange = { currentPageState.value = it },
             maxLines = 1,
             textStyle = LocalTextStyle.current.copy(
                 textAlign = TextAlign.End
@@ -50,7 +55,7 @@ fun ReadDetailsCurrentPageComponent(
             }
         )
         Button(
-            onClick = { onSaveClick(currentPage) },
+            onClick = { onSaveClick(currentPageState.value.toInt()) },
             modifier = Modifier
                 .padding(start = 16.dp)
         ) {

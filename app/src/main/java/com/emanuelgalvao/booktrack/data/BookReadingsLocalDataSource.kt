@@ -42,7 +42,7 @@ class BookReadingsLocalDataSource(
             totalPages = book.totalPages,
             description = book.description,
             isReading = false,
-            currentPage = null
+            currentPage = 0
         )
         val insertedId = readingBookDao.insertReadingBook(readingBook)
         return insertedId > 0
@@ -56,9 +56,9 @@ class BookReadingsLocalDataSource(
                 imageUrl = it.imageUrl,
                 title = it.title,
                 author = it.author,
-                currentPage = it.currentPage?.toString() ?: "0",
+                currentPage = it.currentPage.toString(),
                 totalPages = it.totalPages,
-                readProgress = (it.currentPage ?: 0) / it.totalPages.toFloat()
+                readProgress = it.currentPage / it.totalPages.toFloat()
             )
         }
     }

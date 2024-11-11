@@ -6,7 +6,8 @@ class SearchBooksRemoteDataSource(
     private val searchBooksService: SearchBooksService
 ): SearchBooksRepository {
     override suspend fun fetchBooksByTitle(title: String): Result<List<BookDetailsCardData>> {
-        val response = searchBooksService.searchBooks(title)
+        val titleReplaced = title.replace(" ", "+")
+        val response = searchBooksService.searchBooks(titleReplaced)
         if (response.isSuccessful) {
             response.body()?.let {
                 return Result.success(it)

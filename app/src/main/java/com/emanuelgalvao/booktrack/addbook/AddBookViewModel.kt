@@ -36,6 +36,9 @@ class AddBookViewModel(
     }
 
     fun searchBooksByTitle(title: String) = viewModelScope.launch(Dispatchers.IO) {
+        _state.emit(
+            AddBookUiState.Loading
+        )
         if (title.isEmpty()) {
             _event.emit(
                 AddBookEvent.ShowToast(messageId = R.string.add_book_empty_title_error)
