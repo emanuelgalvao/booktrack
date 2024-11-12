@@ -56,6 +56,7 @@ class ReadDetailsViewModel(
             R.string.details_read_update_current_page_error
         }
         _event.emit(ReadDetailsEvent.ShowToast(messageId = messageId))
+        loadReadData(readingBook.id)
     }
 
     fun handleChangeReadingStatus() = viewModelScope.launch(Dispatchers.IO) {
