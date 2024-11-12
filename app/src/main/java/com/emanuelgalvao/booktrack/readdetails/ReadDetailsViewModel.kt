@@ -45,6 +45,11 @@ class ReadDetailsViewModel(
     }
 
     fun updateCurrentPage(currentPage: Int) = viewModelScope.launch(Dispatchers.IO) {
+        if (currentPage > readingBook.totalPages.toInt()) {
+            _event.emit(ReadDetailsEvent.ShowToast(messageId = R.string.details_read_update_current_page_great_than_total_pages_error))
+            return@launch
+        }
+
         val updateSuccess = bookReadingsRepository.updateCurrentPage(
             bookId = readingBook.id,
             currentPage = currentPage
@@ -71,6 +76,7 @@ class ReadDetailsViewModel(
             R.string.details_read_change_is_reading_error
         }
         _event.emit(ReadDetailsEvent.ShowToast(messageId = messageId))
+        loadReadData(readingBook.id)
     }
 
     fun deleteReading() = viewModelScope.launch(Dispatchers.IO) {
