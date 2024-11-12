@@ -45,6 +45,7 @@ class HomeViewModel(
                 )
             )
         }
+        loadScreenData()
     }
 
     fun handleAddBookResult(result: ActivityResult) = viewModelScope.launch(Dispatchers.IO) {
