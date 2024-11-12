@@ -1,8 +1,9 @@
 package com.emanuelgalvao.booktrack.data
 
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import javax.inject.Inject
 
-class SearchBooksRemoteDataSource(
+class SearchBooksRemoteDataSource @Inject constructor(
     private val searchBooksService: SearchBooksService
 ): SearchBooksRepository {
     override suspend fun fetchBooksByTitle(title: String): Result<List<BookDetailsCardData>> {

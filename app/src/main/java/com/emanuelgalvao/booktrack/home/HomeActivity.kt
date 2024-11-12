@@ -7,30 +7,25 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
 import com.emanuelgalvao.booktrack.addbook.AddBookActivity
-import com.emanuelgalvao.booktrack.data.BookReadingsLocalDataSource
-import com.emanuelgalvao.booktrack.data.DatabaseBuilder
 import com.emanuelgalvao.booktrack.readdetails.ReadDetailsActivity
 import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var addBookActivityLauncher: ActivityResultLauncher<Intent>
     private lateinit var readDetailsActivityLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        homeViewModel = HomeViewModel(
-            bookReadingsRepository = BookReadingsLocalDataSource(
-                readingBookDao = DatabaseBuilder.getInstance(this).readingBookDao()
-            )
-        )
 
         setupScreen()
         setupEventObservable()

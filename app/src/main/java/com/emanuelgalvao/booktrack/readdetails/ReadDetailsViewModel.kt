@@ -5,13 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.ReadingBook
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ReadDetailsViewModel(
+@HiltViewModel
+class ReadDetailsViewModel @Inject constructor(
     private val bookReadingsRepository: BookReadingsRepository
 ): ViewModel() {
 

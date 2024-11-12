@@ -3,8 +3,9 @@ package com.emanuelgalvao.booktrack.data
 import com.emanuelgalvao.booktrack.home.BookListData
 import com.emanuelgalvao.booktrack.home.CurrentReadData
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import javax.inject.Inject
 
-class BookReadingsLocalDataSource(
+class BookReadingsLocalDataSource @Inject constructor(
     private val readingBookDao: ReadingBookDao
 ): BookReadingsRepository {
     override suspend fun getReadData(bookId: String): Result<ReadingBook> {

@@ -4,25 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
-import com.emanuelgalvao.booktrack.data.BookReadingsLocalDataSource
-import com.emanuelgalvao.booktrack.data.DatabaseBuilder
-import com.emanuelgalvao.booktrack.data.RetrofitInstance
-import com.emanuelgalvao.booktrack.data.SearchBooksRemoteDataSource
 import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AddBookActivity : AppCompatActivity() {
 
-    private val addBookViewModel: AddBookViewModel = AddBookViewModel(
-        searchBooksRepository = SearchBooksRemoteDataSource(
-            searchBooksService = RetrofitInstance.searchBooksService
-        ),
-        bookReadingsRepository = BookReadingsLocalDataSource(
-            readingBookDao = DatabaseBuilder.getInstance(this).readingBookDao()
-        )
-    )
+    private val addBookViewModel: AddBookViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

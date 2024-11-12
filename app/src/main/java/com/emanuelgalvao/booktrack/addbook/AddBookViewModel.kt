@@ -6,13 +6,16 @@ import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.BookReadingsRepository
 import com.emanuelgalvao.booktrack.data.SearchBooksRepository
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddBookViewModel(
+@HiltViewModel
+class AddBookViewModel @Inject constructor(
     private val searchBooksRepository: SearchBooksRepository,
     private val bookReadingsRepository: BookReadingsRepository
 ): ViewModel() {
