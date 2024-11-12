@@ -121,6 +121,31 @@ class ReadDetailsViewModelTest {
     }
 
     @Test
+    fun `updateCurrentPage method should update event with ShowToast when new current page is greater than total pages`() = runTest {
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+                every { totalPages } returns "200"
+            }
+        )
+        coEvery { bookReadingsRepository.updateCurrentPage("id", 50) } returns true
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData("id").join()
+        advanceUntilIdle()
+        readDetailsViewModel.updateCurrentPage(201).join()
+        advanceUntilIdle()
+
+        readDetailsViewModel.event.test {
+            val showToastEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsEvent.ShowToast
+            assertEquals(R.string.details_read_update_current_page_great_than_total_pages_error, showToastEvent.messageId)
+        }
+    }
+
+    @Test
     fun `handleChangeReadingStatus method should update event with ShowToast with success message when change has error`() = runTest {
         coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {

@@ -4,6 +4,7 @@
     <string name="details_read_default_error">Ocorreu um erro ao tentar carregar os dados da leitura.</string>
     <string name="details_read_update_current_page_error">Ocorreu um erro ao tentar atualizar a página atual.</string>
     <string name="details_read_update_current_page_success">Página atual atualizada com sucesso.</string>
+    <string name="details_read_update_current_page_great_than_total_pages_error">A página atual não pode ser maior que o total de páginas.</string>
     <string name="details_read_change_is_reading_error">Ocorreu um erro ao tentar alterar o estado da leitura.</string>
     <string name="details_read_change_is_reading_success">Estado da leitura alterado com sucesso.</string>
     <string name="details_read_delete_error">Ocorreu um erro ao tentar excluir a leitura.</string>
