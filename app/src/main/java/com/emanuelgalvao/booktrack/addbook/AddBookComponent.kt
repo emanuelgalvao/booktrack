@@ -55,6 +55,7 @@ fun AddBookComponent(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
+                .padding(bottom = 8.dp)
                 .fillMaxWidth()
         ) {
             OutlinedTextField(
