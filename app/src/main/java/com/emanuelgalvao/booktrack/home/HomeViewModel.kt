@@ -54,6 +54,7 @@ class HomeViewModel(
                     messageId = R.string.home_added_read_success
                 )
             )
+            loadScreenData()
         }
     }
 
