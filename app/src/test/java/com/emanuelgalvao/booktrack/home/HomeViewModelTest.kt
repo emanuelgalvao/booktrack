@@ -109,6 +109,28 @@ class HomeViewModelTest {
     }
 
     @Test
+    fun `handleAddBookResult should call loadScreenData and update state with DisplayReadings when result is added read`() = runTest {
+        coEvery { bookReadingsRepository.getCurrentRead() } returns mockk(relaxed = true)
+        coEvery { bookReadingsRepository.getNextReadings() } returns listOf(mockk(relaxed = true))
+
+        homeViewModel = HomeViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        homeViewModel.handleAddBookResult(
+            result = mockk(relaxed = true) {
+                every { resultCode } returns Activity.RESULT_OK
+            }
+        ).join()
+        advanceUntilIdle()
+
+        homeViewModel.state.test {
+            val displayReadingsEvent = awaitItem() as HomeViewModel.HomeUiState.DisplayReadings
+            assertEquals(true, displayReadingsEvent != null)
+        }
+    }
+
+    @Test
     fun `handleBookClick should update event with GoToDetails with correct book id`() = runTest {
         homeViewModel = HomeViewModel(
             bookReadingsRepository = bookReadingsRepository
