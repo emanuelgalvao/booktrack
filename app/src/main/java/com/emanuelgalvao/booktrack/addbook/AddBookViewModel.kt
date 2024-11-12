@@ -36,9 +36,6 @@ class AddBookViewModel(
     }
 
     fun searchBooksByTitle(title: String) = viewModelScope.launch(Dispatchers.IO) {
-        _state.emit(
-            AddBookUiState.Loading
-        )
         if (title.isEmpty()) {
             _event.emit(
                 AddBookEvent.ShowToast(messageId = R.string.add_book_empty_title_error)
@@ -46,6 +43,9 @@ class AddBookViewModel(
             return@launch
         }
 
+        _state.emit(
+            AddBookUiState.Loading
+        )
         searchBooksRepository.fetchBooksByTitle(title).fold(
             onSuccess = {
                 books = it
@@ -59,6 +59,12 @@ class AddBookViewModel(
             onFailure = {
                 _event.emit(
                     AddBookEvent.ShowToast(messageId = R.string.add_book_search_default_error)
+                )
+                _state.emit(
+                    AddBookUiState.DisplayBooks(
+                        books = listOf(),
+                        selectedBookId = null
+                    )
                 )
             }
         )
