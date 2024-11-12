@@ -171,6 +171,31 @@ class ReadDetailsViewModelTest {
     }
 
     @Test
+    fun `handleChangeReadingStatus method should update state with DisplayDetails to reload screen`() = runTest {
+        coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
+            mockk(relaxed = true) {
+                every { id } returns "id"
+                every { isReading } returns false
+            }
+        )
+        coEvery { bookReadingsRepository.setIsReading("id", true) } returns true
+
+        readDetailsViewModel = ReadDetailsViewModel(
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        readDetailsViewModel.loadReadData("id").join()
+        advanceUntilIdle()
+        readDetailsViewModel.handleChangeReadingStatus().join()
+        advanceUntilIdle()
+
+        readDetailsViewModel.state.test {
+            val displayDetailsEvent = awaitItem() as ReadDetailsViewModel.ReadDetailsUiState.DisplayDetails
+            assertEquals(true, displayDetailsEvent != null)
+        }
+    }
+
+    @Test
     fun `deleteReading method should update event with ShowToast with error message when delete has error`() = runTest {
         coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
