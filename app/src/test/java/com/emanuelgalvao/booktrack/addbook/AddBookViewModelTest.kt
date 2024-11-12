@@ -102,6 +102,26 @@ class AddBookViewModelTest {
     }
 
     @Test
+    fun `searchBooksByTitle should update state with DisplayBooks when request failure`() = runTest {
+        coEvery { searchBooksRepository.fetchBooksByTitle("titulo") } returns Result.failure(
+            Exception("")
+        )
+
+        addBookViewModel = AddBookViewModel(
+            searchBooksRepository = searchBooksRepository,
+            bookReadingsRepository = bookReadingsRepository
+        )
+
+        addBookViewModel.searchBooksByTitle("titulo").join()
+        advanceUntilIdle()
+
+        addBookViewModel.state.test {
+            val displayBooksEvent = awaitItem() as AddBookViewModel.AddBookUiState.DisplayBooks
+            assertEquals(true, displayBooksEvent != null)
+        }
+    }
+
+    @Test
     fun `onBookSelected should update state with new selectedBookId when new book is selected`() = runTest {
         addBookViewModel = AddBookViewModel(
             searchBooksRepository = searchBooksRepository,
