@@ -81,13 +81,6 @@ fun AddBookComponent(
                 )
             }
         }
-        AnimatedVisibility(visible = books.isEmpty()) {
-            ErrorComponent(
-                messageId = R.string.add_book_no_data_message,
-                modifier = Modifier
-                    .weight(1f)
-            )
-        }
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
