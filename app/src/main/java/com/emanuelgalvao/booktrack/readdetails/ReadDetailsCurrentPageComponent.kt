@@ -13,20 +13,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ReadDetailsCurrentPageComponent(
     currentPage: Int,
     onSaveClick: (Int) -> Unit
 ) {
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val currentPageState = rememberSaveable { mutableStateOf(currentPage.toString()) }
 
     Row(
@@ -36,7 +42,11 @@ fun ReadDetailsCurrentPageComponent(
     ) {
         OutlinedTextField(
             value = currentPageState.value,
-            onValueChange = { currentPageState.value = it },
+            onValueChange = { newValue ->
+                if (newValue.length <= 5) {
+                    currentPageState.value = newValue.filter { it.isDigit() }
+                }
+            },
             maxLines = 1,
             textStyle = LocalTextStyle.current.copy(
                 textAlign = TextAlign.End
@@ -54,7 +64,11 @@ fun ReadDetailsCurrentPageComponent(
             }
         )
         Button(
-            onClick = { onSaveClick(currentPageState.value.toInt()) },
+            onClick = {
+                onSaveClick(currentPageState.value.toInt())
+                keyboardController?.hide()
+                focusManager.clearFocus()
+            },
             modifier = Modifier
                 .padding(start = 16.dp)
         ) {
