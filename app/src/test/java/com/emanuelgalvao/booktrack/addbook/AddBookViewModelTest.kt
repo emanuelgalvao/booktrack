@@ -1,9 +1,9 @@
 package com.emanuelgalvao.booktrack.addbook
 
 import app.cash.turbine.test
-import com.emanuelgalvao.booktrack.data.SearchBooksRepository
+import com.emanuelgalvao.booktrack.data.repositories.SearchBooksRepository
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

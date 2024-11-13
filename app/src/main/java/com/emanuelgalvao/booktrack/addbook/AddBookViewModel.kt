@@ -3,9 +3,11 @@ package com.emanuelgalvao.booktrack.addbook
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.data.BookReadingsRepository
-import com.emanuelgalvao.booktrack.data.SearchBooksRepository
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
+import com.emanuelgalvao.booktrack.data.repositories.SearchBooksRepository
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.util.extensions.isNull
+import com.emanuelgalvao.booktrack.util.values.DEFAULT_FLOW_REPLAY_VALUE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,10 +22,12 @@ class AddBookViewModel @Inject constructor(
     private val bookReadingsRepository: BookReadingsRepository
 ): ViewModel() {
 
-    private val _state: MutableSharedFlow<AddBookUiState> = MutableSharedFlow(replay = 1)
+    private val _state: MutableSharedFlow<AddBookUiState> =
+        MutableSharedFlow(replay = DEFAULT_FLOW_REPLAY_VALUE)
     val state: SharedFlow<AddBookUiState> = _state.asSharedFlow()
 
-    private val _event: MutableSharedFlow<AddBookEvent?> = MutableSharedFlow(replay = 1)
+    private val _event: MutableSharedFlow<AddBookEvent?> =
+        MutableSharedFlow(replay = DEFAULT_FLOW_REPLAY_VALUE)
     val event: SharedFlow<AddBookEvent?> = _event.asSharedFlow()
 
     private var books: List<BookDetailsCardData> = listOf()
@@ -84,7 +88,7 @@ class AddBookViewModel @Inject constructor(
     }
 
     fun addBook() = viewModelScope.launch(Dispatchers.IO) {
-        if (selectedBookId == null) {
+        if (selectedBookId.isNull()) {
             _event.emit(
                 AddBookEvent.ShowToast(
                     messageId = R.string.add_book_no_selected_book

@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.emanuelgalvao.booktrack.util.extensions.isNotNull
+import com.emanuelgalvao.booktrack.util.extensions.isNull
+import com.emanuelgalvao.booktrack.util.values.spacingSmall
 
 @Composable
 fun HomeComponent(
@@ -18,10 +20,10 @@ fun HomeComponent(
 ) {
     Column(
         modifier = modifier
-            .padding(8.dp)
+            .padding(spacingSmall)
             .fillMaxWidth()
     ) {
-        AnimatedVisibility(visible = currentReadData != null) {
+        AnimatedVisibility(visible = currentReadData.isNotNull()) {
             currentReadData?.let {
                 CurrentReadComponent(
                     currentRead = currentReadData,
@@ -37,7 +39,7 @@ fun HomeComponent(
                 }
             )
         }
-        AnimatedVisibility(visible = currentReadData == null && nextReadingsListData.isEmpty()) {
+        AnimatedVisibility(visible = currentReadData.isNull() && nextReadingsListData.isEmpty()) {
             NoDataComponent()
         }
     }

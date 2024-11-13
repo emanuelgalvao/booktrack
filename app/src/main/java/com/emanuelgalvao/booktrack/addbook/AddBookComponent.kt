@@ -27,13 +27,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardComponent
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
-import com.emanuelgalvao.booktrack.shared.ErrorComponent
+import com.emanuelgalvao.booktrack.util.extensions.isNotNull
+import com.emanuelgalvao.booktrack.util.values.EMPTY_STRING
+import com.emanuelgalvao.booktrack.util.values.defaultButtonHeight
+import com.emanuelgalvao.booktrack.util.values.roundedButtonSize
+import com.emanuelgalvao.booktrack.util.values.spacingSmall
+import com.emanuelgalvao.booktrack.util.values.weightFull
 
 @Composable
 fun AddBookComponent(
@@ -45,30 +49,30 @@ fun AddBookComponent(
     onAddBookClick: () -> Unit
 ) {
 
-    val searchTextState = rememberSaveable { mutableStateOf("") }
+    val searchTextState = rememberSaveable { mutableStateOf(EMPTY_STRING) }
 
     Column(
         modifier = modifier
-            .padding(8.dp)
+            .padding(spacingSmall)
             .fillMaxSize()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = spacingSmall)
                 .fillMaxWidth()
         ) {
             OutlinedTextField(
                 value = searchTextState.value,
                 onValueChange = { searchTextState.value = it },
                 maxLines = 1,
-                placeholder = { Text("Pesquisar livro por título...") },
-                modifier = Modifier.weight(1f)
+                placeholder = { Text(stringResource(R.string.add_book_search_by_title_placeholder)) },
+                modifier = Modifier.weight(weightFull)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(spacingSmall))
             IconButton(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(50.dp))
+                    .clip(RoundedCornerShape(roundedButtonSize))
                     .background(MaterialTheme.colorScheme.primary),
                 onClick = {
                     onSearchClick(searchTextState.value)
@@ -83,27 +87,27 @@ fun AddBookComponent(
         }
         LazyColumn(
             modifier = Modifier
-                .weight(1f)
+                .weight(weightFull)
         ) {
             items(books) { book ->
                 BookDetailsCardComponent(
                     bookDetails = book,
                     isSelected = selectedBookId == book.id,
                     modifier = Modifier
-                        .padding(top = 8.dp),
+                        .padding(top = spacingSmall),
                     onClick = { onBookSelect(book.id) }
                 )
             }
         }
-        AnimatedVisibility(visible = selectedBookId != null) {
+        AnimatedVisibility(visible = selectedBookId.isNotNull()) {
             Button(
                 onClick = onAddBookClick,
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .padding(top = spacingSmall)
                     .fillMaxWidth()
-                    .height(60.dp)
+                    .height(defaultButtonHeight)
             ) {
-                Text(text = "Adicionar Livro")
+                Text(text = stringResource(R.string.add_book_button_text))
             }
         }
     }

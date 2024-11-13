@@ -23,7 +23,7 @@ class ReadDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bookId = intent.extras?.getString(KEY_BOOK_ID) ?: ""
+        val bookId = intent.extras?.getString(KEY_BOOK_ID).orEmpty()
 
         setupScreen()
         setupEventObservable()

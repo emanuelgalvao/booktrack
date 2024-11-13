@@ -15,4 +15,20 @@
     <string name="home_deleted_read_success">Leitura excluida com sucesso.</string>
     <string name="home_added_read_success">Leitura adicionada com sucesso.</string>
     <string name="add_book_no_data_message">Digite um título de livro válido para realizar a busca.</string>
+    <string name="add_book_search_by_title_placeholder">Pesquisar livro por título...</string>
+    <string name="add_book_button_text">Adicionar Livro</string>
+    <string name="add_book_top_bar_title">Adicionar Livro</string>
+    <string name="home_next_readings_title">Próximas Leituras</string>
+    <string name="home_current_read_title">Leitura Atual</string>
+    <string name="home_no_data_title">Você ainda não possui nenhum livro cadastrado!</string>
+    <string name="home_no_data_subtitle">Que tal começar uma nova leitura?</string>
+    <string name="details_read_stop_read_button_text">Parar Leitura</string>
+    <string name="details_read_start_read_button_text">Iniciar Leitura</string>
+    <string name="read_details_current_page_label">Página Atual:</string>
+    <string name="read_details_save_button_text">Salvar</string>
+    <string name="read_details_top_bar_title">Detalhes do Livro</string>
+    <string name="read_details_author_label">Autor: %1$s</string>
+    <string name="read_details_pages_label">Páginas: %1$s</string>
+    <string name="error_component_try_again_button_text">Tentar Novamente</string>
+    <string name="loading_component_label">Carregando...</string>
 </resources>

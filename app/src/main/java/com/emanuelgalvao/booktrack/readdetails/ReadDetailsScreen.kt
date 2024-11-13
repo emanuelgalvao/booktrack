@@ -3,19 +3,15 @@ package com.emanuelgalvao.booktrack.readdetails
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.data.ReadingBook
+import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
 import com.emanuelgalvao.booktrack.shared.CustomTopAppBar
 import com.emanuelgalvao.booktrack.shared.ErrorComponent
 import com.emanuelgalvao.booktrack.shared.LoadingComponent
@@ -31,7 +27,7 @@ fun ReadDetailsScreen(
     Scaffold(
         topBar = {
             CustomTopAppBar(
-                title = "Detalhes do Livro",
+                title = stringResource(R.string.read_details_top_bar_title),
                 onBackClick = onBackClick,
                 actions = {
                     IconButton(

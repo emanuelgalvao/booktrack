@@ -2,7 +2,7 @@ package com.emanuelgalvao.booktrack.home
 
 import android.app.Activity
 import app.cash.turbine.test
-import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
 import com.emanuelgalvao.booktrack.R
 import io.mockk.coEvery
 import io.mockk.every

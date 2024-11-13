@@ -3,8 +3,9 @@ package com.emanuelgalvao.booktrack.readdetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.data.ReadingBook
-import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
+import com.emanuelgalvao.booktrack.util.values.DEFAULT_FLOW_REPLAY_VALUE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,10 +19,12 @@ class ReadDetailsViewModel @Inject constructor(
     private val bookReadingsRepository: BookReadingsRepository
 ): ViewModel() {
 
-    private val _state: MutableSharedFlow<ReadDetailsUiState> = MutableSharedFlow(replay = 1)
+    private val _state: MutableSharedFlow<ReadDetailsUiState> =
+        MutableSharedFlow(DEFAULT_FLOW_REPLAY_VALUE)
     val state: SharedFlow<ReadDetailsUiState> = _state.asSharedFlow()
 
-    private val _event: MutableSharedFlow<ReadDetailsEvent?> = MutableSharedFlow(replay = 1)
+    private val _event: MutableSharedFlow<ReadDetailsEvent?> =
+        MutableSharedFlow(DEFAULT_FLOW_REPLAY_VALUE)
     val event: SharedFlow<ReadDetailsEvent?> = _event.asSharedFlow()
 
     private lateinit var readingBook: ReadingBook

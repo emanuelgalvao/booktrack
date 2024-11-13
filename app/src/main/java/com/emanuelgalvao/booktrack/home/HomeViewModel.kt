@@ -5,7 +5,8 @@ import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.data.BookReadingsRepository
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
+import com.emanuelgalvao.booktrack.util.values.DEFAULT_FLOW_REPLAY_VALUE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,10 +20,10 @@ class HomeViewModel @Inject constructor(
     private val bookReadingsRepository: BookReadingsRepository
 ): ViewModel() {
 
-    private val _state: MutableSharedFlow<HomeUiState> = MutableSharedFlow(replay = 1)
+    private val _state: MutableSharedFlow<HomeUiState> = MutableSharedFlow(replay = DEFAULT_FLOW_REPLAY_VALUE)
     val state: SharedFlow<HomeUiState> = _state.asSharedFlow()
 
-    private val _event: MutableSharedFlow<HomeEvent?> = MutableSharedFlow(replay = 1)
+    private val _event: MutableSharedFlow<HomeEvent?> = MutableSharedFlow(replay = DEFAULT_FLOW_REPLAY_VALUE)
     val event: SharedFlow<HomeEvent?> = _event.asSharedFlow()
 
     fun loadScreenData() = viewModelScope.launch(Dispatchers.IO) {

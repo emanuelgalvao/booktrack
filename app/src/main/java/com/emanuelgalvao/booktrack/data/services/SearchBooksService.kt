@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.data
+package com.emanuelgalvao.booktrack.data.services
 
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
 import retrofit2.Response

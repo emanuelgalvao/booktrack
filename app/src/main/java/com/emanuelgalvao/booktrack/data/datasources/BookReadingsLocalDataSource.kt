@@ -1,8 +1,16 @@
-package com.emanuelgalvao.booktrack.data
+package com.emanuelgalvao.booktrack.data.datasources
 
+import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
+import com.emanuelgalvao.booktrack.data.database.dao.ReadingBookDao
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
 import com.emanuelgalvao.booktrack.home.BookListData
 import com.emanuelgalvao.booktrack.home.CurrentReadData
 import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.util.exceptions.RegisterNotFoundException
+import com.emanuelgalvao.booktrack.util.extensions.isPositive
+import com.emanuelgalvao.booktrack.util.extensions.toBookListData
+import com.emanuelgalvao.booktrack.util.extensions.toCurrentReadData
+import com.emanuelgalvao.booktrack.util.extensions.toReadingBook
 import javax.inject.Inject
 
 class BookReadingsLocalDataSource @Inject constructor(
@@ -13,64 +21,41 @@ class BookReadingsLocalDataSource @Inject constructor(
         return readingBook?.let {
             Result.success(it)
         } ?: run {
-            Result.failure(Exception("Nenhum registro encontrado com esse id."))
+            Result.failure(RegisterNotFoundException())
         }
     }
 
     override suspend fun updateCurrentPage(bookId: String, currentPage: Int): Boolean {
         val updatedLines = readingBookDao.setCurrentPage(bookId, currentPage)
-        return updatedLines > 0
+        return updatedLines.isPositive()
     }
 
     override suspend fun setIsReading(bookId: String, isReading: Boolean): Boolean {
         readingBookDao.setAllBooksAsNotIsReading()
         val updatedLines = readingBookDao.setIsReading(bookId, isReading)
-        return updatedLines > 0
+        return updatedLines.isPositive()
     }
 
     override suspend fun deleteReading(bookId: String): Boolean {
         val deletedLines = readingBookDao.deleteReadingBookById(bookId)
-        return deletedLines > 0
+        return deletedLines.isPositive()
     }
 
     override suspend fun addReading(book: BookDetailsCardData): Boolean {
-        val readingBook = ReadingBook(
-            id = book.id,
-            imageUrl = book.imageUrl,
-            title = book.title,
-            subtitle = book.subtitle,
-            author = book.author,
-            totalPages = book.totalPages,
-            description = book.description,
-            isReading = false,
-            currentPage = 0
-        )
+        val readingBook = book.toReadingBook()
         val insertedId = readingBookDao.insertReadingBook(readingBook)
-        return insertedId > 0
+        return insertedId.isPositive()
     }
 
     override suspend fun getCurrentRead(): CurrentReadData? {
         val readingBook = readingBookDao.getReadingBookIsReading()
-        return readingBook?.let {
-            CurrentReadData(
-                id = it.id,
-                imageUrl = it.imageUrl,
-                title = it.title,
-                author = it.author,
-                currentPage = it.currentPage.toString(),
-                totalPages = it.totalPages,
-                readProgress = it.currentPage / it.totalPages.toFloat()
-            )
-        }
+        return readingBook?.toCurrentReadData()
     }
 
     override suspend fun getNextReadings(): List<BookListData> {
         val notReadingBooks = readingBookDao.getReadingBookNotIsReading()
         return notReadingBooks.map {
-            BookListData(
-                id = it.id,
-                imageUrl = it.imageUrl
-            )
+            it.toBookListData()
         }
     }
 }

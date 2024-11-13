@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Spacing -->
+    <dimen name="spacing_none">0dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_big">24dp</dimen>
+
+    <!-- Weights -->
+    <dimen name="weight_full">1dp</dimen>
+
+    <!-- Button Sizes -->
+    <dimen name="default_button_height">60dp</dimen>
+    <dimen name="rounded_button_size">50dp</dimen>
+
+    <!-- Font Sizes -->
+    <dimen name="font_size_small">14sp</dimen>
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_big">32sp</dimen>
+
+    <!-- Card Sizes -->
+    <dimen name="current_read_card_height">200dp</dimen>
+    <dimen name="current_read_card_width">140dp</dimen>
+    <dimen name="next_read_card_height">140dp</dimen>
+    <dimen name="next_read_card_width">100dp</dimen>
+
+    <!-- Icon Sizes -->
+    <dimen name="default_icon_size">100dp</dimen>
+
+    <!-- Stroke Sizes -->
+    <dimen name="stroke_size_none">-1dp</dimen>
+    <dimen name="stroke_size_small">1dp</dimen>
+
+</resources>

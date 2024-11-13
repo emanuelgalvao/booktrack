@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.data
+package com.emanuelgalvao.booktrack.data.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

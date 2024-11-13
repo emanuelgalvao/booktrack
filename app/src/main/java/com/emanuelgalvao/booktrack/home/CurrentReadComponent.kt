@@ -17,11 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
+import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.util.values.currentReadCardHeight
+import com.emanuelgalvao.booktrack.util.values.currentReadCardWidth
+import com.emanuelgalvao.booktrack.util.values.fontSizeBig
+import com.emanuelgalvao.booktrack.util.values.fontSizeMedium
+import com.emanuelgalvao.booktrack.util.values.fontSizeSmall
+import com.emanuelgalvao.booktrack.util.values.spacingSmall
+import com.emanuelgalvao.booktrack.util.values.weightFull
 
 data class CurrentReadData(
     val id: String,
@@ -44,16 +51,16 @@ fun CurrentReadComponent(
             .fillMaxWidth()
     ) {
         Text(
-            text = "Leitura Atual",
-            fontSize = 32.sp,
+            text = stringResource(R.string.home_current_read_title),
+            fontSize = fontSizeBig,
             fontWeight = FontWeight.Bold
         )
         Card(
             onClick = onClick,
             modifier = Modifier
-                .padding(top = 8.dp)
+                .padding(top = spacingSmall)
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(currentReadCardHeight)
         ) {
             Row {
                 SubcomposeAsyncImage(
@@ -68,24 +75,24 @@ fun CurrentReadComponent(
                     },
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(140.dp)
+                        .width(currentReadCardWidth)
                 )
                 Column(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(spacingSmall)
                 ) {
                     Text(
                         text = title,
-                        fontSize = 18.sp,
+                        fontSize = fontSizeMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = author,
-                        fontSize = 14.sp,
+                        fontSize = fontSizeSmall,
                         modifier = Modifier
-                            .padding(top = 8.dp)
+                            .padding(top = spacingSmall)
                     )
-                    Spacer(modifier = Modifier.weight(1f))
+                    Spacer(modifier = Modifier.weight(weightFull))
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -96,9 +103,9 @@ fun CurrentReadComponent(
                         )
                         Text(
                             text = "$currentPage/$totalPages Páginas",
-                            fontSize = 16.sp,
+                            fontSize = fontSizeSmall,
                             modifier = Modifier
-                                .padding(start = 8.dp)
+                                .padding(start = spacingSmall)
                         )
                     }
                 }

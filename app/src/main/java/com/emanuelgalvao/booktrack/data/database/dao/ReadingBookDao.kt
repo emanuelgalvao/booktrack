@@ -1,9 +1,10 @@
-package com.emanuelgalvao.booktrack.data
+package com.emanuelgalvao.booktrack.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
 
 @Dao
 interface ReadingBookDao {

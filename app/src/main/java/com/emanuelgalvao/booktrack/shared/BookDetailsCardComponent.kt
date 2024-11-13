@@ -1,7 +1,6 @@
 package com.emanuelgalvao.booktrack.shared
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,14 +22,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
+import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.util.values.currentReadCardHeight
+import com.emanuelgalvao.booktrack.util.values.currentReadCardWidth
+import com.emanuelgalvao.booktrack.util.values.fontSizeMedium
+import com.emanuelgalvao.booktrack.util.values.fontSizeSmall
+import com.emanuelgalvao.booktrack.util.values.spacingMedium
+import com.emanuelgalvao.booktrack.util.values.spacingSmall
+import com.emanuelgalvao.booktrack.util.values.strokeNone
+import com.emanuelgalvao.booktrack.util.values.strokeSmall
 
 data class BookDetailsCardData(
     val id: String,
@@ -49,13 +55,16 @@ fun BookDetailsCardComponent(
     modifier: Modifier = Modifier,
     onClick: () -> Unit? = { }
 ) = with(bookDetails) {
+
+    val titleSubtitleMaxLines = 2
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .height(currentReadCardHeight)
             .border(
                 border = BorderStroke(
-                    if (isSelected) 1.dp else (-1).dp,
+                    getStrokeSize(isSelected = isSelected),
                     MaterialTheme.colorScheme.primary
                 ),
                 shape = MaterialTheme.shapes.medium
@@ -71,18 +80,16 @@ fun BookDetailsCardComponent(
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .size(16.dp)
+                            .size(spacingMedium)
                     ) {
-                        CircularProgressIndicator(
-                            progress = 1f
-                        )
+                        CircularProgressIndicator()
                     }
                 },
                 error = {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .size(16.dp)
+                            .size(spacingMedium)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Close,
@@ -92,43 +99,46 @@ fun BookDetailsCardComponent(
                 },
                 modifier = Modifier
                     .fillMaxHeight()
-                    .width(140.dp)
+                    .width(currentReadCardWidth)
             )
             Column(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(spacingSmall)
             ) {
                 Text(
                     text = title,
-                    fontSize = 18.sp,
+                    fontSize = fontSizeMedium,
                     fontWeight = FontWeight.Bold,
-                    maxLines = 2,
+                    maxLines = titleSubtitleMaxLines,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = subtitle,
-                    fontSize = 14.sp,
-                    maxLines = 2,
+                    fontSize = fontSizeSmall,
+                    maxLines = titleSubtitleMaxLines,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
-                        .padding(top = 8.dp)
+                        .padding(top = spacingSmall)
                 )
                 Text(
-                    text = "Autor: $author",
-                    fontSize = 14.sp,
+                    text = stringResource(R.string.read_details_author_label, author),
+                    fontSize = fontSizeSmall,
                     modifier = Modifier
-                        .padding(top = 8.dp)
+                        .padding(top = spacingSmall)
                 )
                 Text(
-                    text = "Páginas: $totalPages",
-                    fontSize = 14.sp,
+                    text = stringResource(R.string.read_details_pages_label, totalPages),
+                    fontSize = fontSizeSmall,
                     modifier = Modifier
-                        .padding(top = 8.dp)
+                        .padding(top = spacingSmall)
                 )
             }
         }
     }
 }
+
+@Composable
+private fun getStrokeSize(isSelected: Boolean) = if (isSelected) strokeSmall else strokeNone
 
 @Preview
 @Composable

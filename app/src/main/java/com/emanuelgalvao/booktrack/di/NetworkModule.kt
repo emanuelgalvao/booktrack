@@ -1,6 +1,6 @@
 package com.emanuelgalvao.booktrack.di
 
-import com.emanuelgalvao.booktrack.data.SearchBooksService
+import com.emanuelgalvao.booktrack.data.services.SearchBooksService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

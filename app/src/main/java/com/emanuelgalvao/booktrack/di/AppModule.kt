@@ -1,11 +1,11 @@
 package com.emanuelgalvao.booktrack.di
 
-import com.emanuelgalvao.booktrack.data.BookReadingsLocalDataSource
-import com.emanuelgalvao.booktrack.data.BookReadingsRepository
-import com.emanuelgalvao.booktrack.data.ReadingBookDao
-import com.emanuelgalvao.booktrack.data.SearchBooksRemoteDataSource
-import com.emanuelgalvao.booktrack.data.SearchBooksRepository
-import com.emanuelgalvao.booktrack.data.SearchBooksService
+import com.emanuelgalvao.booktrack.data.datasources.BookReadingsLocalDataSource
+import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
+import com.emanuelgalvao.booktrack.data.database.dao.ReadingBookDao
+import com.emanuelgalvao.booktrack.data.datasources.SearchBooksRemoteDataSource
+import com.emanuelgalvao.booktrack.data.repositories.SearchBooksRepository
+import com.emanuelgalvao.booktrack.data.services.SearchBooksService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

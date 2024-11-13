@@ -7,11 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Error
-import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.SentimentDissatisfied
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.util.extensions.isNotNull
+import com.emanuelgalvao.booktrack.util.values.defaultIconSize
+import com.emanuelgalvao.booktrack.util.values.spacingMedium
 
 @Composable
 fun ErrorComponent(
@@ -37,21 +36,21 @@ fun ErrorComponent(
         Icon(
             imageVector = Icons.Outlined.SentimentDissatisfied,
             contentDescription = null,
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(defaultIconSize)
         )
         Text(
             text = stringResource(id = messageId),
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(top = spacingMedium)
         )
-        AnimatedVisibility(visible = tryAgainCallback != null) {
+        AnimatedVisibility(visible = tryAgainCallback.isNotNull()) {
             Button(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = spacingMedium),
                 onClick = {
                     tryAgainCallback?.let { tryAgainCallback() }
                 }
             ) {
-                Text(text = "Tentar Novamente")
+                Text(text = stringResource(R.string.error_component_try_again_button_text))
             }
         }
     }
