@@ -1,6 +1,6 @@
 package com.emanuelgalvao.booktrack.data.repositories
 
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 
 interface SearchBooksRepository {
 

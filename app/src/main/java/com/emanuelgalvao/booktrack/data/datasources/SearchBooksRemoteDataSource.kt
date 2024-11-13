@@ -2,7 +2,7 @@ package com.emanuelgalvao.booktrack.data.datasources
 
 import com.emanuelgalvao.booktrack.data.repositories.SearchBooksRepository
 import com.emanuelgalvao.booktrack.data.services.SearchBooksService
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 import com.emanuelgalvao.booktrack.util.exceptions.ProcessResponseBodyException
 import com.emanuelgalvao.booktrack.util.exceptions.RequestFailureException
 import com.emanuelgalvao.booktrack.util.extensions.formatToApiRequest

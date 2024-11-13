@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.home
+package com.emanuelgalvao.booktrack.screens.home.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column

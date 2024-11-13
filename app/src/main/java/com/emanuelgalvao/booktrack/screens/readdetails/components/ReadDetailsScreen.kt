@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.readdetails
+package com.emanuelgalvao.booktrack.screens.readdetails.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -12,26 +12,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
-import com.emanuelgalvao.booktrack.shared.CustomTopAppBar
-import com.emanuelgalvao.booktrack.shared.ErrorComponent
-import com.emanuelgalvao.booktrack.shared.LoadingComponent
+import com.emanuelgalvao.booktrack.screens.readdetails.ReadDetailsViewModel
+import com.emanuelgalvao.booktrack.screens.readdetails.listeners.ReadDetailsActionsListener
+import com.emanuelgalvao.booktrack.shared.components.CustomTopAppBar
+import com.emanuelgalvao.booktrack.shared.components.ErrorComponent
+import com.emanuelgalvao.booktrack.shared.components.LoadingComponent
+import com.emanuelgalvao.booktrack.shared.listeners.TopAppBarActionsListener
 
 @Composable
 fun ReadDetailsScreen(
     state: ReadDetailsViewModel.ReadDetailsUiState,
-    onBackClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    onCurrentPageSaveClick: (Int) -> Unit,
-    onStartStopReadingClick: () -> Unit
+    topAppBarActionsListener: TopAppBarActionsListener,
+    actionsListener: ReadDetailsActionsListener
 ) {
     Scaffold(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(R.string.read_details_top_bar_title),
-                onBackClick = onBackClick,
+                onBackClick = {  topAppBarActionsListener.onBackClick() },
                 actions = {
                     IconButton(
-                        onClick = onDeleteClick
+                        onClick = { actionsListener.onDeleteClick() }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Delete,
@@ -59,8 +60,10 @@ fun ReadDetailsScreen(
                 ReadDetailsComponent(
                     readingBook = state.readingBook,
                     modifier = Modifier.padding(it),
-                    onCurrentPageSaveClick = onCurrentPageSaveClick,
-                    onStartStopReadingClick = onStartStopReadingClick
+                    onCurrentPageSaveClick = { currentPage ->
+                        actionsListener.onCurrentPageSaveClick(currentPage)
+                    },
+                    onStartStopReadingClick = { actionsListener.onStartStopReadingClick() }
                 )
             }
 
@@ -73,10 +76,14 @@ fun ReadDetailsScreen(
 fun ReadDetailsScreenLoadingStatePreview() {
     ReadDetailsScreen(
         state = ReadDetailsViewModel.ReadDetailsUiState.Loading,
-        onBackClick = { },
-        onDeleteClick = { },
-        onCurrentPageSaveClick = { },
-        onStartStopReadingClick = { }
+        topAppBarActionsListener = object: TopAppBarActionsListener {
+            override fun onBackClick() { }
+        },
+        actionsListener = object: ReadDetailsActionsListener {
+            override fun onDeleteClick() { }
+            override fun onCurrentPageSaveClick(currentPage: Int) { }
+            override fun onStartStopReadingClick() { }
+        }
     )
 }
 
@@ -87,10 +94,14 @@ fun ReadDetailsScreenShowErrorStatePreview() {
         state = ReadDetailsViewModel.ReadDetailsUiState.ShowError(
             messageId = R.string.app_name
         ),
-        onBackClick = { },
-        onDeleteClick = { },
-        onCurrentPageSaveClick = { },
-        onStartStopReadingClick = { }
+        topAppBarActionsListener = object: TopAppBarActionsListener {
+            override fun onBackClick() { }
+        },
+        actionsListener = object: ReadDetailsActionsListener {
+            override fun onDeleteClick() { }
+            override fun onCurrentPageSaveClick(currentPage: Int) { }
+            override fun onStartStopReadingClick() { }
+        }
     )
 }
 
@@ -111,9 +122,13 @@ fun ReadDetailsScreenDisplayDetailsStatePreview() {
                 currentPage = 0
             )
         ),
-        onBackClick = { },
-        onDeleteClick = { },
-        onCurrentPageSaveClick = { },
-        onStartStopReadingClick = { }
+        topAppBarActionsListener = object: TopAppBarActionsListener {
+            override fun onBackClick() { }
+        },
+        actionsListener = object: ReadDetailsActionsListener {
+            override fun onDeleteClick() { }
+            override fun onCurrentPageSaveClick(currentPage: Int) { }
+            override fun onStartStopReadingClick() { }
+        }
     )
 }

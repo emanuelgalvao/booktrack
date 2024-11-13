@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.home
+package com.emanuelgalvao.booktrack.screens.home
 
 import android.app.Activity
 import androidx.activity.result.ActivityResult
@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
+import com.emanuelgalvao.booktrack.screens.home.components.BookListData
+import com.emanuelgalvao.booktrack.screens.home.components.CurrentReadData
 import com.emanuelgalvao.booktrack.util.values.DEFAULT_FLOW_REPLAY_VALUE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

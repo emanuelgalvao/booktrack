@@ -1,9 +1,9 @@
 package com.emanuelgalvao.booktrack.data.repositories
 
 import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
-import com.emanuelgalvao.booktrack.home.BookListData
-import com.emanuelgalvao.booktrack.home.CurrentReadData
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.screens.home.components.BookListData
+import com.emanuelgalvao.booktrack.screens.home.components.CurrentReadData
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 
 interface BookReadingsRepository {
 

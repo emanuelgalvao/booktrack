@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.shared
+package com.emanuelgalvao.booktrack.shared.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
+import com.emanuelgalvao.booktrack.screens.readdetails.ReadDetailsViewModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

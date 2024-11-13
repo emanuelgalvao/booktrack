@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.addbook
+package com.emanuelgalvao.booktrack.screens.addbook.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -30,8 +30,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardComponent
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.screens.addbook.listeners.AddBookActionsListener
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardComponent
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 import com.emanuelgalvao.booktrack.util.extensions.isNotNull
 import com.emanuelgalvao.booktrack.util.values.EMPTY_STRING
 import com.emanuelgalvao.booktrack.util.values.defaultButtonHeight
@@ -44,9 +45,7 @@ fun AddBookComponent(
     books: List<BookDetailsCardData>,
     selectedBookId: String?,
     modifier: Modifier,
-    onSearchClick: (String) -> Unit,
-    onBookSelect: (String) -> Unit,
-    onAddBookClick: () -> Unit
+    actionsListener: AddBookActionsListener
 ) {
 
     val searchTextState = rememberSaveable { mutableStateOf(EMPTY_STRING) }
@@ -75,7 +74,7 @@ fun AddBookComponent(
                     .clip(RoundedCornerShape(roundedButtonSize))
                     .background(MaterialTheme.colorScheme.primary),
                 onClick = {
-                    onSearchClick(searchTextState.value)
+                    actionsListener.onSearchClick(title = searchTextState.value)
                 }
             ) {
                 Icon(
@@ -95,13 +94,13 @@ fun AddBookComponent(
                     isSelected = selectedBookId == book.id,
                     modifier = Modifier
                         .padding(top = spacingSmall),
-                    onClick = { onBookSelect(book.id) }
+                    onClick = { actionsListener.onBookSelect(bookId = book.id) }
                 )
             }
         }
         AnimatedVisibility(visible = selectedBookId.isNotNull()) {
             Button(
-                onClick = onAddBookClick,
+                onClick = { actionsListener.onAddBookClick() },
                 modifier = Modifier
                     .padding(top = spacingSmall)
                     .fillMaxWidth()
@@ -120,9 +119,11 @@ fun AddBookComponentEmptyListPreview() {
         books = listOf(),
         selectedBookId = null,
         modifier = Modifier,
-        onSearchClick = { },
-        onBookSelect = { },
-        onAddBookClick = { }
+        actionsListener = object: AddBookActionsListener {
+            override fun onSearchClick(title: String) { }
+            override fun onBookSelect(bookId: String) { }
+            override fun onAddBookClick() { }
+        }
     )
 }
 
@@ -152,9 +153,11 @@ fun AddBookComponentWithBookDataWithoutSelectedBookPreview() {
         ),
         selectedBookId = null,
         modifier = Modifier,
-        onSearchClick = { },
-        onBookSelect = { },
-        onAddBookClick = { }
+        actionsListener = object: AddBookActionsListener {
+            override fun onSearchClick(title: String) { }
+            override fun onBookSelect(bookId: String) { }
+            override fun onAddBookClick() { }
+        }
     )
 }
 
@@ -184,8 +187,10 @@ fun AAddBookComponentWithBookDataWithSelectedBookPreview() {
         ),
         selectedBookId = "id2",
         modifier = Modifier,
-        onSearchClick = { },
-        onBookSelect = { },
-        onAddBookClick = { }
+        actionsListener = object: AddBookActionsListener {
+            override fun onSearchClick(title: String) { }
+            override fun onBookSelect(bookId: String) { }
+            override fun onAddBookClick() { }
+        }
     )
 }

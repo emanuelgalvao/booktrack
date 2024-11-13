@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.home
+package com.emanuelgalvao.booktrack.screens.home.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,20 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.shared.ErrorComponent
-import com.emanuelgalvao.booktrack.shared.LoadingComponent
+import com.emanuelgalvao.booktrack.screens.home.HomeViewModel
+import com.emanuelgalvao.booktrack.screens.home.listeners.HomeActionsListeners
+import com.emanuelgalvao.booktrack.shared.components.ErrorComponent
+import com.emanuelgalvao.booktrack.shared.components.LoadingComponent
 
 @Composable
 fun HomeScreen(
     state: HomeViewModel.HomeUiState,
-    onAddBookClick: () -> Unit,
-    onTryAgainClick: () -> Unit,
-    onBookClick: (String) -> Unit
+    actionsListeners: HomeActionsListeners
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onAddBookClick,
+                onClick = { actionsListeners.onAddBookClick() },
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(
@@ -43,7 +43,7 @@ fun HomeScreen(
                 ErrorComponent(
                     messageId = state.messageId,
                     modifier = Modifier.padding(it),
-                    tryAgainCallback = onTryAgainClick
+                    tryAgainCallback = { actionsListeners.onTryAgainClick() }
                 )
             }
             is HomeViewModel.HomeUiState.DisplayReadings -> {
@@ -52,7 +52,7 @@ fun HomeScreen(
                     nextReadingsListData = state.nextReadingsListData,
                     modifier = Modifier.padding(it),
                     onBookClick = { bookId ->
-                        onBookClick(bookId)
+                        actionsListeners.onBookClick(bookId = bookId)
                     }
                 )
             }
@@ -66,9 +66,11 @@ fun HomeScreen(
 fun HomeScreenLoadingStatePreview() {
     HomeScreen(
         state = HomeViewModel.HomeUiState.Loading,
-        onAddBookClick = { },
-        onTryAgainClick = { },
-        onBookClick = { }
+        actionsListeners = object: HomeActionsListeners {
+            override fun onAddBookClick() { }
+            override fun onTryAgainClick() { }
+            override fun onBookClick(bookId: String) { }
+        }
     )
 }
 
@@ -79,9 +81,11 @@ fun HomeScreenShowErrorStatePreview() {
         state = HomeViewModel.HomeUiState.ShowError(
             messageId = R.string.app_name
         ),
-        onAddBookClick = { },
-        onTryAgainClick = { },
-        onBookClick = { }
+        actionsListeners = object: HomeActionsListeners {
+            override fun onAddBookClick() { }
+            override fun onTryAgainClick() { }
+            override fun onBookClick(bookId: String) { }
+        }
     )
 }
 
@@ -93,8 +97,10 @@ fun HomeScreenDisplayReadingsStatePreview() {
             currentReadData = null,
             nextReadingsListData = listOf()
         ),
-        onAddBookClick = { },
-        onTryAgainClick = { },
-        onBookClick = { }
+        actionsListeners = object: HomeActionsListeners {
+            override fun onAddBookClick() { }
+            override fun onTryAgainClick() { }
+            override fun onBookClick(bookId: String) { }
+        }
     )
 }

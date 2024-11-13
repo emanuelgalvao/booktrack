@@ -16,15 +16,15 @@
         android:theme="@style/Theme.Booktrack"
         tools:targetApi="31">
         <activity
-            android:name=".readdetails.ReadDetailsActivity"
+            android:name=".screens.readdetails.ReadDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".addbook.AddBookActivity"
+            android:name=".screens.addbook.AddBookActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".screens.home.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>

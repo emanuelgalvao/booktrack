@@ -1,7 +1,7 @@
 package com.emanuelgalvao.booktrack.util.extensions
 
 import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 import com.emanuelgalvao.booktrack.util.values.ZERO
 
 fun BookDetailsCardData.toReadingBook(): ReadingBook =

@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.home
+package com.emanuelgalvao.booktrack.screens.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,14 +10,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
-import com.emanuelgalvao.booktrack.addbook.AddBookActivity
-import com.emanuelgalvao.booktrack.readdetails.ReadDetailsActivity
+import com.emanuelgalvao.booktrack.screens.addbook.AddBookActivity
+import com.emanuelgalvao.booktrack.screens.home.components.HomeScreen
+import com.emanuelgalvao.booktrack.screens.home.listeners.HomeActionsListeners
+import com.emanuelgalvao.booktrack.screens.readdetails.ReadDetailsActivity
 import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeActionsListeners {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -42,15 +44,7 @@ class HomeActivity : AppCompatActivity() {
             BooktrackTheme {
                 HomeScreen(
                     state = state.value,
-                    onAddBookClick = {
-                        homeViewModel.handleAddBookClick()
-                    },
-                    onTryAgainClick = {
-                        homeViewModel.loadScreenData()
-                    },
-                    onBookClick = { bookId ->
-                        homeViewModel.handleBookClick(bookId)
-                    }
+                    actionsListeners = this
                 )
             }
         }
@@ -103,5 +97,17 @@ class HomeActivity : AppCompatActivity() {
         ) { result ->
             homeViewModel.handleDetailsResult(result)
         }
+    }
+
+    override fun onAddBookClick() {
+        homeViewModel.handleAddBookClick()
+    }
+
+    override fun onTryAgainClick() {
+        homeViewModel.loadScreenData()
+    }
+
+    override fun onBookClick(bookId: String) {
+        homeViewModel.handleBookClick(bookId)
     }
 }

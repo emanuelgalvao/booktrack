@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.readdetails
+package com.emanuelgalvao.booktrack.screens.readdetails.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

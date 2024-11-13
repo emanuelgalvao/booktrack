@@ -1,11 +1,11 @@
-package com.emanuelgalvao.booktrack.addbook
+package com.emanuelgalvao.booktrack.screens.addbook
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
 import com.emanuelgalvao.booktrack.data.repositories.SearchBooksRepository
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 import com.emanuelgalvao.booktrack.util.extensions.isNull
 import com.emanuelgalvao.booktrack.util.values.DEFAULT_FLOW_REPLAY_VALUE
 import dagger.hilt.android.lifecycle.HiltViewModel

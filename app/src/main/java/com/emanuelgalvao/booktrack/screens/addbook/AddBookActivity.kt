@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.addbook
+package com.emanuelgalvao.booktrack.screens.addbook
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,12 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
+import com.emanuelgalvao.booktrack.screens.addbook.components.AddBookScreen
+import com.emanuelgalvao.booktrack.screens.addbook.listeners.AddBookActionsListener
+import com.emanuelgalvao.booktrack.shared.listeners.TopAppBarActionsListener
 import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddBookActivity : AppCompatActivity() {
+class AddBookActivity : AppCompatActivity(), TopAppBarActionsListener, AddBookActionsListener {
 
     private val addBookViewModel: AddBookViewModel by viewModels()
 
@@ -32,18 +35,8 @@ class AddBookActivity : AppCompatActivity() {
             BooktrackTheme {
                 AddBookScreen(
                     state = state.value,
-                    onBackClick = {
-                        onBackPressedDispatcher.onBackPressed()
-                    },
-                    onSearchClick = { title ->
-                        addBookViewModel.searchBooksByTitle(title)
-                    },
-                    onBookSelect = { bookId ->
-                        addBookViewModel.onBookSelected(bookId)
-                    },
-                    onAddBookClick = {
-                        addBookViewModel.addBook()
-                    }
+                    topAppBarActionListener = this,
+                    actionsListener = this
                 )
             }
         }
@@ -66,5 +59,21 @@ class AddBookActivity : AppCompatActivity() {
                 null -> { }
             }
         }
+    }
+
+    override fun onBackClick() {
+        onBackPressedDispatcher.onBackPressed()
+    }
+
+    override fun onSearchClick(title: String) {
+        addBookViewModel.searchBooksByTitle(title)
+    }
+
+    override fun onBookSelect(bookId: String) {
+        addBookViewModel.onBookSelected(bookId)
+    }
+
+    override fun onAddBookClick() {
+        addBookViewModel.addBook()
     }
 }

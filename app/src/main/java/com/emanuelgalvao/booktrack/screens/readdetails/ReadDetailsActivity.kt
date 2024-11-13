@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.readdetails
+package com.emanuelgalvao.booktrack.screens.readdetails
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,12 +7,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
+import com.emanuelgalvao.booktrack.screens.readdetails.components.ReadDetailsScreen
+import com.emanuelgalvao.booktrack.screens.readdetails.listeners.ReadDetailsActionsListener
+import com.emanuelgalvao.booktrack.shared.listeners.TopAppBarActionsListener
 import com.emanuelgalvao.booktrack.ui.theme.BooktrackTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ReadDetailsActivity : AppCompatActivity() {
+class ReadDetailsActivity : AppCompatActivity(), TopAppBarActionsListener,
+    ReadDetailsActionsListener {
 
     companion object {
         const val KEY_BOOK_ID = "bookId"
@@ -38,18 +42,8 @@ class ReadDetailsActivity : AppCompatActivity() {
             BooktrackTheme {
                 ReadDetailsScreen(
                     state = state.value,
-                    onBackClick = {
-                        onBackPressedDispatcher.onBackPressed()
-                    },
-                    onDeleteClick = {
-                        readDetailsViewModel.deleteReading()
-                    },
-                    onCurrentPageSaveClick = { currentPage ->
-                        readDetailsViewModel.updateCurrentPage(currentPage)
-                    },
-                    onStartStopReadingClick = {
-                        readDetailsViewModel.handleChangeReadingStatus()
-                    }
+                    topAppBarActionsListener = this,
+                    actionsListener = this
                 )
             }
         }
@@ -72,5 +66,21 @@ class ReadDetailsActivity : AppCompatActivity() {
                 null -> { }
             }
         }
+    }
+
+    override fun onBackClick() {
+        onBackPressedDispatcher.onBackPressed()
+    }
+
+    override fun onDeleteClick() {
+        readDetailsViewModel.deleteReading()
+    }
+
+    override fun onCurrentPageSaveClick(currentPage: Int) {
+        readDetailsViewModel.updateCurrentPage(currentPage)
+    }
+
+    override fun onStartStopReadingClick() {
+        readDetailsViewModel.handleChangeReadingStatus()
     }
 }

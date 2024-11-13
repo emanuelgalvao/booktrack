@@ -3,9 +3,9 @@ package com.emanuelgalvao.booktrack.data.datasources
 import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
 import com.emanuelgalvao.booktrack.data.database.dao.ReadingBookDao
 import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
-import com.emanuelgalvao.booktrack.home.BookListData
-import com.emanuelgalvao.booktrack.home.CurrentReadData
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardData
+import com.emanuelgalvao.booktrack.screens.home.components.BookListData
+import com.emanuelgalvao.booktrack.screens.home.components.CurrentReadData
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardData
 import com.emanuelgalvao.booktrack.util.exceptions.RegisterNotFoundException
 import com.emanuelgalvao.booktrack.util.extensions.isPositive
 import com.emanuelgalvao.booktrack.util.extensions.toBookListData

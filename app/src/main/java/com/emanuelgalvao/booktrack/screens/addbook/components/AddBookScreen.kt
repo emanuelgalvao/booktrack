@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.addbook
+package com.emanuelgalvao.booktrack.screens.addbook.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -7,22 +7,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
-import com.emanuelgalvao.booktrack.shared.CustomTopAppBar
-import com.emanuelgalvao.booktrack.shared.LoadingComponent
+import com.emanuelgalvao.booktrack.screens.addbook.listeners.AddBookActionsListener
+import com.emanuelgalvao.booktrack.screens.addbook.AddBookViewModel
+import com.emanuelgalvao.booktrack.shared.components.CustomTopAppBar
+import com.emanuelgalvao.booktrack.shared.components.LoadingComponent
+import com.emanuelgalvao.booktrack.shared.listeners.TopAppBarActionsListener
 
 @Composable
 fun AddBookScreen(
     state: AddBookViewModel.AddBookUiState,
-    onBackClick: () -> Unit,
-    onSearchClick: (String) -> Unit,
-    onBookSelect: (String) -> Unit,
-    onAddBookClick: () -> Unit
+    topAppBarActionListener: TopAppBarActionsListener,
+    actionsListener: AddBookActionsListener
 ) {
     Scaffold(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(R.string.add_book_top_bar_title),
-                onBackClick = onBackClick
+                onBackClick = { topAppBarActionListener.onBackClick() }
             )
         }
     ) {
@@ -35,11 +36,7 @@ fun AddBookScreen(
                     books = state.books,
                     selectedBookId = state.selectedBookId,
                     modifier = Modifier.padding(it),
-                    onSearchClick = onSearchClick,
-                    onBookSelect = { bookId ->
-                        onBookSelect(bookId)
-                    },
-                    onAddBookClick = onAddBookClick
+                    actionsListener = actionsListener
                 )
             }
         }
@@ -51,10 +48,14 @@ fun AddBookScreen(
 fun AddBookScreenLoadingStatePreview() {
     AddBookScreen(
         state = AddBookViewModel.AddBookUiState.Loading,
-        onBackClick = { },
-        onSearchClick = { },
-        onBookSelect = { },
-        onAddBookClick = { }
+        topAppBarActionListener = object: TopAppBarActionsListener {
+            override fun onBackClick() { }
+        },
+        actionsListener = object: AddBookActionsListener {
+            override fun onSearchClick(title: String) { }
+            override fun onBookSelect(bookId: String) { }
+            override fun onAddBookClick() { }
+        }
     )
 }
 
@@ -66,9 +67,13 @@ fun AddBookScreenDisplayBooksStatePreview() {
             books = listOf(),
             selectedBookId = null
         ),
-        onBackClick = { },
-        onSearchClick = { },
-        onBookSelect = { },
-        onAddBookClick = { }
+        topAppBarActionListener = object: TopAppBarActionsListener {
+            override fun onBackClick() { }
+        },
+        actionsListener = object: AddBookActionsListener {
+            override fun onSearchClick(title: String) { }
+            override fun onBookSelect(bookId: String) { }
+            override fun onAddBookClick() { }
+        }
     )
 }

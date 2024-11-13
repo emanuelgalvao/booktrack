@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.readdetails
+package com.emanuelgalvao.booktrack.screens.readdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

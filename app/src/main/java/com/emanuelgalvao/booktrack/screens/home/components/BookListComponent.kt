@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.home
+package com.emanuelgalvao.booktrack.screens.home.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -103,7 +103,7 @@ fun BookListComponent(
 }
 
 @Composable
-fun getCardStartingPadding(index: Int): Dp = if (index.isPositive()) spacingNone else spacingSmall
+fun getCardStartingPadding(index: Int): Dp = if (index.isPositive()) spacingSmall else spacingNone
 
 @Preview
 @Composable

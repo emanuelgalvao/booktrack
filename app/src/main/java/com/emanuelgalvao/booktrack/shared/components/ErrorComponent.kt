@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.shared
+package com.emanuelgalvao.booktrack.shared.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement

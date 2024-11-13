@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.readdetails
+package com.emanuelgalvao.booktrack.screens.readdetails.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.emanuelgalvao.booktrack.R
 import com.emanuelgalvao.booktrack.data.database.model.ReadingBook
-import com.emanuelgalvao.booktrack.shared.BookDetailsCardComponent
+import com.emanuelgalvao.booktrack.shared.components.BookDetailsCardComponent
 import com.emanuelgalvao.booktrack.util.extensions.toBookDetailsCardData
 import com.emanuelgalvao.booktrack.util.values.defaultButtonHeight
 import com.emanuelgalvao.booktrack.util.values.spacingMedium

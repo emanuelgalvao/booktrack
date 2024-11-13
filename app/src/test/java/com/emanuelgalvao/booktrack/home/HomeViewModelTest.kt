@@ -4,6 +4,7 @@ import android.app.Activity
 import app.cash.turbine.test
 import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
 import com.emanuelgalvao.booktrack.R
+import com.emanuelgalvao.booktrack.screens.home.HomeViewModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
