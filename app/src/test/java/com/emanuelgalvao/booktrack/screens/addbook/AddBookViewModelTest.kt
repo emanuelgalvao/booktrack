@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.addbook
+package com.emanuelgalvao.booktrack.screens.addbook
 
 import app.cash.turbine.test
 import com.emanuelgalvao.booktrack.data.repositories.SearchBooksRepository

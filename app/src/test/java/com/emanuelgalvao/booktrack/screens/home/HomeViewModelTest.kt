@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.home
+package com.emanuelgalvao.booktrack.screens.home
 
 import android.app.Activity
 import app.cash.turbine.test

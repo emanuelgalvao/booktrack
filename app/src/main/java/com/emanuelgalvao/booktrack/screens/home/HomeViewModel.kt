@@ -81,9 +81,6 @@ class HomeViewModel @Inject constructor(
 
     sealed class HomeUiState {
         data object Loading: HomeUiState()
-        data class ShowError(
-            val messageId: Int
-        ): HomeUiState()
         data class DisplayReadings(
             val currentReadData: CurrentReadData?,
             val nextReadingsListData: List<BookListData>

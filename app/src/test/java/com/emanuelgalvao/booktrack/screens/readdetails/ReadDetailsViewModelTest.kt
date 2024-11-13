@@ -1,4 +1,4 @@
-package com.emanuelgalvao.booktrack.readdetails
+package com.emanuelgalvao.booktrack.screens.readdetails
 
 import app.cash.turbine.test
 import com.emanuelgalvao.booktrack.data.repositories.BookReadingsRepository
@@ -78,6 +78,7 @@ class ReadDetailsViewModelTest {
         coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
+                every { totalPages } returns "100"
             }
         )
         coEvery { bookReadingsRepository.updateCurrentPage("id", 50) } returns false
@@ -102,6 +103,7 @@ class ReadDetailsViewModelTest {
         coEvery { bookReadingsRepository.getReadData("id") } returns Result.success(
             mockk(relaxed = true) {
                 every { id } returns "id"
+                every { totalPages } returns "100"
             }
         )
         coEvery { bookReadingsRepository.updateCurrentPage("id", 50) } returns true

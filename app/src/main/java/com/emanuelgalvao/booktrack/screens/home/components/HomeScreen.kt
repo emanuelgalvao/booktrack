@@ -39,13 +39,6 @@ fun HomeScreen(
             HomeViewModel.HomeUiState.Loading -> {
                 LoadingComponent(modifier = Modifier.padding(it))
             }
-            is HomeViewModel.HomeUiState.ShowError -> {
-                ErrorComponent(
-                    messageId = state.messageId,
-                    modifier = Modifier.padding(it),
-                    tryAgainCallback = { actionsListeners.onTryAgainClick() }
-                )
-            }
             is HomeViewModel.HomeUiState.DisplayReadings -> {
                 HomeComponent(
                     currentReadData = state.currentReadData,
@@ -66,21 +59,6 @@ fun HomeScreen(
 fun HomeScreenLoadingStatePreview() {
     HomeScreen(
         state = HomeViewModel.HomeUiState.Loading,
-        actionsListeners = object: HomeActionsListeners {
-            override fun onAddBookClick() { }
-            override fun onTryAgainClick() { }
-            override fun onBookClick(bookId: String) { }
-        }
-    )
-}
-
-@Preview
-@Composable
-fun HomeScreenShowErrorStatePreview() {
-    HomeScreen(
-        state = HomeViewModel.HomeUiState.ShowError(
-            messageId = R.string.app_name
-        ),
         actionsListeners = object: HomeActionsListeners {
             override fun onAddBookClick() { }
             override fun onTryAgainClick() { }
